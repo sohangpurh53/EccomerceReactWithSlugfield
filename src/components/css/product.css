@@ -1,0 +1,112 @@
+.products-table-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  
+  .table-wrapper {
+    margin: 5% auto;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    padding: 10px;
+    max-width: max-content; /* Adjust as needed */
+    background-color: #f9f9f9;
+    
+  }
+  
+  .data-table table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .data-table th,
+  .data-table td {
+    padding: 8px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .data-table th {
+    background-color: #4CAF50;
+    color: white;
+  }
+  
+  .data-table tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  
+  .data-table tr:hover {
+    background-color: #ddd;
+  }
+  
+  h2 {
+    text-align: center;
+    margin-bottom: 10px;
+  }
+
+  .data-table .btn-update{
+    background-color: grey;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    padding:  8px 16px;
+    font-size: 14px;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .data-table .btn-delete{
+    padding: 8px 16px;
+    font-size: 14px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    background-color: #ff6347; /* Tomato Red */
+    color: #fff;
+  }
+  .data-table .btn-image{
+    background-color: #3498db;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  padding:  8px 16px;
+  font-size: 14px;
+  text-decoration: none;
+  cursor: pointer;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  }
+  
+  @media (max-width: 768px) {
+    .products-table-container {
+      margin-top: 5%; 
+      /* Adjust the margin for smaller screens */
+    }
+  
+    .table-wrapper {
+     margin:0 auto ;
+     padding: 5px;
+     border-radius: 1.5px;
+     max-width: 100%; /* Allow the table to take full width on smaller screens */
+    }
+   
+  .data-table td {
+    padding: 3px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+    font-size: 10px;
+    
+  }
+  .data-table th{
+    padding: 3px;
+    font-size: 8px;
+    text-align: center;
+  }
+  .data-table .btn-update{
+    background-color: grey;
+    padding: 2px;
+    font-size: 8px;
+    color: white;
+    border-radius: 2.5px;
+  }
+  
+  }

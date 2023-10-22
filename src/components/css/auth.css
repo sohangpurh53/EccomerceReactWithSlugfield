@@ -1,0 +1,39 @@
+
+
+.auth-container{
+    max-width:500px;
+    display: flex;
+    justify-content: center;
+    margin: 10% auto;
+    box-shadow: 5px 10px 15px gray;
+}
+
+.auth-container label{
+    font-size: small;
+    
+}
+.auth-container .form-group 
+input[type='text'],input[type='email'],
+ input[type='password']{
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+.auth-container form button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: #fff;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    
+    margin-bottom: 10px;
+  }
+  .auth-container form button:hover{
+    background-color: #0a5bb2;
+   
+  }

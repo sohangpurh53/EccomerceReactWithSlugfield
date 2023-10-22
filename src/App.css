@@ -1,0 +1,9 @@
+.app-container{
+  min-height: 100vh;
+
+}
+@media (max-width:768px) {
+  .app-container{
+    min-height: 100vh;
+  }
+}
