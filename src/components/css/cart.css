@@ -12,7 +12,7 @@
     font-family: 'Arial', sans-serif;
   }
   
-  .container {
+  .cart-container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
@@ -124,6 +124,12 @@
   button:hover,
   .remove-button:hover {
     opacity: 0.8;
+  }
+
+  .cart-container .missing-message{
+   margin-left: 10%;
+    font-size: medium;
+   color: #2196F3;
   }
   
   /* Responsive Design (Example) */

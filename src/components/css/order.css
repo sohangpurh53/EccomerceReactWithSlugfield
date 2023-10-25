@@ -1,0 +1,77 @@
+.order-container{
+ margin: 10% auto;
+ width: 800px;
+
+}
+
+.address-container {
+max-width: 500px;
+
+}
+
+.address-container label{
+    color: #6c757d;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: medium; 
+    gap: 2px;
+    
+}
+
+.address-container input{
+     padding: 10px;
+     flex-direction: column;
+     justify-content: center;
+     align-items: center;
+     width: 70%;
+}
+
+
+
+
+
+
+
+.order-btn {
+    margin-top: 15px;
+    background: linear-gradient(to bottom, #FFA726, #FF9800);
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
+    border: none;
+    padding: 10px 20px;
+    margin-left: 50px;
+    color: white;
+    cursor: pointer;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    animation: pulse 2s infinite alternate;
+}
+
+.order-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.2);
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    100% {
+        transform: scale(1.05);
+    }
+}
+
+.create-address-btn{
+    background-color: #41B853;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
+    border: none;
+    padding: 10px 20px;
+    margin-left: 50px;
+    color: white;
+    cursor: pointer;
+   border-radius: 2px;
+}
+.create-address-btn:hover{
+    background-color:#087418;
+}

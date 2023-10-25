@@ -23,7 +23,7 @@
 
 
   
-  label{
+  .product-form-container label{
     color: #6c757d;
     display: flex;
     
@@ -70,7 +70,7 @@
 
 
   
-  label{
+  .category-form-cotainer label{
     color: #6c757d;
     display: flex;
     
@@ -117,7 +117,7 @@
   }
 
   
-  label{
+  .image-form-container label{
     color: #6c757d;
     margin-bottom: 10px;
     display: flex;

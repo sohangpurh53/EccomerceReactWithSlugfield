@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axiosInstance from '../utils/axiosInstance';
 import { useNavigate } from 'react-router-dom';
+import '../css/order.css'
 
 
 function PlaceOrder() {
@@ -80,11 +81,11 @@ function PlaceOrder() {
   };
 
   if (orderPlaced) {
-    return <div>Order placed successfully!</div>;
+     usenavigation('/')
   }
 
   return (
-    <div>
+    <div className='order-container'>
       <h1>Place Your Order</h1>
       <label>
         Select Address:
@@ -97,26 +98,26 @@ function PlaceOrder() {
         </select>
       </label>
       {addressChoice === 'new' && (
-        <div>
+        <div className='address-container'>
           <label>
-            New Address:
+            New Address: </label>
             
-         <label htmlFor="Address">Address <input type="text" name='address'  value={shippingAddress.address} onChange={handleShippingAddressChange} /></label> 
-         <label htmlFor="City"> City <input type="text" name='city' value={shippingAddress.city} onChange={handleShippingAddressChange} /></label> 
-         <label htmlFor="State">State<input type="text" name='state' value={shippingAddress.state} onChange={handleShippingAddressChange} /></label> 
-         <label htmlFor="Country">Country<input type="text" name='country'  value={shippingAddress.country} onChange={handleShippingAddressChange} /></label> 
-         <label htmlFor="Postal Code">Postal Code<input type="text" name='postal_code' value={shippingAddress.postal_code} onChange={handleShippingAddressChange} /></label> 
-         <label htmlFor="Mobile No">Mobile No<input type="text" name='mobile_no' value={shippingAddress.mobile_no} onChange={handleShippingAddressChange} /></label> 
+         <label htmlFor="Address">Address <input type="text" placeholder='Please Write Your Address' name='address'  value={shippingAddress.address} onChange={handleShippingAddressChange} /></label> 
+         <label htmlFor="City"> City <input type="text" placeholder='Please Write Your City' name='city' value={shippingAddress.city} onChange={handleShippingAddressChange} /></label> 
+         <label htmlFor="State">State<input type="text" placeholder='Please Write Your State' name='state' value={shippingAddress.state} onChange={handleShippingAddressChange} /></label> 
+         <label htmlFor="Country">Country<input type="text" placeholder='Please Write Your Country' name='country'  value={shippingAddress.country} onChange={handleShippingAddressChange} /></label> 
+         <label htmlFor="Postal Code">Postal Code<input type="text" placeholder='Please Write Your Postal Code' name='postal_code' value={shippingAddress.postal_code} onChange={handleShippingAddressChange} /></label> 
+         <label htmlFor="Mobile No">Mobile No<input type="number" placeholder='Please Write Your Mobile Number' name='mobile_no' value={shippingAddress.mobile_no} onChange={handleShippingAddressChange} /></label> 
           
-          </label>
+         
 
-          <button onClick={createShippingAddress}>Create Address</button>
+         <button className='create-address-btn' onClick={createShippingAddress}>Create Address</button>
 
         </div>
         
       )}
+      {addressChoice === 'new'? (''):(<button className='order-btn' onClick={handlePlaceOrder}>Place Order</button>)} 
       
-      <button onClick={handlePlaceOrder}>Place Order</button>
     </div>
   );
 }
