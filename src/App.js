@@ -20,6 +20,7 @@ import DeleteProduct from './components/forms/deleteProduct';
 import ProductImageList from './components/pages/listProductImage';
 import DeleteImageProduct from './components/forms/deleteProductImage';
 import Cart from './components/pages/Cart';
+import Order from './components/pages/Order';
 
 function App() {
   return (
@@ -48,6 +49,7 @@ function App() {
       <Route path='/product/delete/:slug/' element={<DeleteProduct/>}/>
       <Route path='/user/profile/' element={<UserProfile/>}/>
       <Route path='/cart/' element={<Cart/>} ></Route>
+      <Route path='/order/' element={<Order/>} ></Route>
     
      </Routes>
      </div>

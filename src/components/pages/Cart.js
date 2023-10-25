@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react'
 import axiosInstance from '../utils/axiosInstance';
 import '../css/cart.css'
 import Notfication from '../utils/Notfication';
+import { Link } from 'react-router-dom';
+
 
 const Cart = () => {
     const [cartDetails, setCartDetails] = useState({ cart_items: [] });
@@ -112,9 +114,7 @@ const Cart = () => {
         </div>
       
 
-     
-
-      <div className="order-summary">
+        {cart_items.length> 0? ( <div className="order-summary">
         <h2>Order Summary</h2>
         <div>
           <span>Subtotal:</span>
@@ -129,9 +129,12 @@ const Cart = () => {
           <span>Total:</span>
           <span> ₹{cartDetails.total_amount}</span>
         </div>
-        <button className="proceed-button">Proceed to Checkout</button>
+        <Link className="proceed-button" to={'/order/'}> Proceed to Checkout </Link>
+        {/* <button ></button> */}
       </div>
-    </div>
+    ):('') }
+   </div>
+     
   );
 };
 

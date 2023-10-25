@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import '../css/auth.css';
 import axiosInstance from '../utils/axiosInstance';
+import { Link } from 'react-router-dom';
+
 
 const UserSignin = () => {
   const [userLoginData, setUserLoginData] = useState({
@@ -62,6 +64,7 @@ const UserSignin = () => {
           SignIn
         </button>
       </form>
+      <Link to={'/signup'} >Signup</Link>
     </div>
   );
 };
