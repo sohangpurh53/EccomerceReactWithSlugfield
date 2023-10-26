@@ -44,18 +44,19 @@ const AdminDashboard = () => {
     
         <>
         
-        <div className='dashboard-aside-menu'>
-            <aside  className="aside-menu">
-              <div>
-                <div>
-                <button onClick={() => handleClick('ProductForm')}>Create-Product</button>
-                  <button onClick={() => handleClick('CategoryForm')}>Create-Category</button>
-     
-                  
-                </div>
-              </div>
-            </aside>
-            </div>
+        <div className="toggle-button" onClick={toggleMenu}>
+      <div className='arrow-btn-design'><div className="arrow">&#9654;</div></div>  
+      </div>
+      <div className={`sidebar${isMenuOpen ? ' open' : ''}`}>
+        <ul>
+          <li>
+            <button className='sidebar-btn' onClick={() => handleClick('ProductForm')}>Create-Product</button>
+          </li>
+          <li>
+            <button className='sidebar-btn' onClick={() => handleClick('CategoryForm')}>Create-Category</button>
+          </li>
+        </ul>
+      </div>
         
 
       
