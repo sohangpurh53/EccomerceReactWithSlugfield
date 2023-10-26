@@ -21,6 +21,7 @@ import ProductImageList from './components/pages/listProductImage';
 import DeleteImageProduct from './components/forms/deleteProductImage';
 import Cart from './components/pages/Cart';
 import Order from './components/pages/Order';
+import AdminDashboard from './components/pages/AdminDashboard';
 
 function App() {
   return (
@@ -50,6 +51,7 @@ function App() {
       <Route path='/user/profile/' element={<UserProfile/>}/>
       <Route path='/cart/' element={<Cart/>} ></Route>
       <Route path='/order/' element={<Order/>} ></Route>
+      <Route path='/user/dashboard/' element={<AdminDashboard/>} ></Route>
     
      </Routes>
      </div>

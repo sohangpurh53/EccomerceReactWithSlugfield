@@ -27,7 +27,7 @@ const SingleProductPage = () => {
         }
         fetchData()
     }, [slug])
-    console.log()
+  
    
    useEffect(()=>{
    const fetchData = async ()=>{

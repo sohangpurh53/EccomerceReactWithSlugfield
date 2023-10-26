@@ -44,6 +44,9 @@ const Header = () => {
                 <li className='header-item'>
                     <Link to='/category/form/' >Category-form</Link>
                 </li>
+                <li className='header-item'>
+                    <Link to='/user/dashboard/' >Admin-Dashboard</Link>
+                </li>
     {authenticated? (  <li className='header-item'>
                     <Link to='/signout' >SignOut</Link>
                 </li> ):(<li className='header-item'>

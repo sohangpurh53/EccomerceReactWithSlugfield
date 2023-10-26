@@ -212,16 +212,18 @@ body {
   }
   
 
-  .carousel-control {
+  .image-carousel .carousel-control {
     background-color: #007bff;
     border: none;
     border-radius: 5px;
     color: #fff;
     cursor: pointer;
     font-size: 18px;
-    margin: 0 5px;
     padding: 10px 20px;
     transition: background-color 0.3s;
+    width: 40%;
+    margin-right: 15px;
+    
   }
   
   .carousel-control:hover {

@@ -4,6 +4,7 @@ import '../css/style.css'
 import Notfication from '../utils/Notfication'
 
 const ProductForm = () => {
+  
     const [notification, setNotification] = useState('')
     const [categoryOption, setCategoryOption] = useState([])
     const [sellerOption, setSellerOption] = useState([])
@@ -14,7 +15,8 @@ const ProductForm = () => {
         shipping_fee: '',
         stock: '', 
         category: '', 
-         seller: '',
+        seller: '',
+        uploaded_images:''
     })
 
     useEffect(()=> {
@@ -41,32 +43,42 @@ const ProductForm = () => {
             [name]:value,
         })
     }
-
-    const CreateProduct = async (e)=>{
+    const handleImageUpload = (e) => {
+        const files = Array.from(e.target.files);
+        setProductData({
+          ...productData,
+          uploaded_images: files
+        });
+      };
+   
+      const handleSubmit = async (e) => {
         e.preventDefault();
-        const data = {
-            name: productData.name, 
-            description: productData.description, 
-            price: productData.price, 
-            shipping_fee: productData.shipping_fee,
-            stock: productData.stock, 
-            category: productData.category, 
-            seller: productData.seller,
-            }
-        console.log(data)
+        const form = new FormData();
+        Object.keys(productData).forEach((key) => {
+          if (key === 'uploaded_images') {
+            productData[key].forEach((file) => {
+              form.append('uploaded_images', file);
+            });
+          } else {
+            form.append(key, productData[key]);
+          }
+        });
+    
         try {
-            await axiosInstance.post('create/product/', data).then(response=> { if(response.data){
-                setNotification(`Product Created Successfully ${response.data.name}`);
-                setTimeout(()=>{setNotification('')}, 2000)
+          await axiosInstance.post('create/product/', form, {
+            headers: {
+              'Content-Type': 'multipart/form-data'
+            }
+          }).then(response => { if(response.data){
+            setNotification(`Product Created Successfully ${response.data.name}`);
+            setTimeout(()=>{setNotification('')}, 2000)
 
-            }else{setNotification('Error while create product')}}
-               )
+        }else{setNotification('Error while create product')}});
+         
         } catch (error) {
-            console.log(error)
+          console.error('Error creating product:', error);
         }
-
-    }
-
+      };
   return (
     <>
     <div className="product-form-container">
@@ -82,6 +94,16 @@ const ProductForm = () => {
                 required
                  />
             </div>
+            <div>
+        <label>Images:</label>
+        <input
+          type="file"
+          name="uploaded_images"
+          accept="image/*"
+          multiple
+          onChange={handleImageUpload}
+        />
+      </div>
 
             <div className="form-group">
                 <label htmlFor="description">Description</label>
@@ -145,7 +167,7 @@ const ProductForm = () => {
              
                
             </div>
-           <button onClick={CreateProduct}>Create Product</button>
+           <button onClick={handleSubmit}>Create Product</button>
         </form>
     </div>
     </>
