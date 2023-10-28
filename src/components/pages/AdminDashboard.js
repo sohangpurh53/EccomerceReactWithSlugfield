@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import ProductForm from '../forms/productForm'
 import CategoryForm from '../forms/categoryForm';
 import '../css/dashboard.css'
+import OrderList from './Orders';
 
 
 const AdminDashboard = () => {
@@ -31,6 +32,8 @@ const AdminDashboard = () => {
      
       case 'CategoryForm':
         return <CategoryForm />;
+      case 'OrderDetails':
+        return <OrderList />;
       default:
         return '';
     }
@@ -42,10 +45,11 @@ const AdminDashboard = () => {
         
        
     
-        <>
-        
+       <div className="dashboard-container">
+
+        <div className="arrow-container">
         <div className="toggle-button" onClick={toggleMenu}>
-      <div className='arrow-btn-design'><div className="arrow">&#9654;</div></div>  
+      <div className='arrow-btn-design'><div className="arrow"> <i className="bi bi-layout-sidebar-inset"></i></div></div>  
       </div>
       <div className={`sidebar${isMenuOpen ? ' open' : ''}`}>
         <ul>
@@ -55,8 +59,11 @@ const AdminDashboard = () => {
           <li>
             <button className='sidebar-btn' onClick={() => handleClick('CategoryForm')}>Create-Category</button>
           </li>
+          <li>
+            <button className='sidebar-btn' onClick={() => handleClick('OrderDetails')}>Orders Recieved</button>
+          </li>
         </ul>
-      </div>
+      </div></div>
         
 
       
@@ -77,6 +84,7 @@ const AdminDashboard = () => {
                   <div className="menu-options">
                      <button onClick={() => handleClick('ProductForm')}>Create-Product</button>
                   <button onClick={() => handleClick('CategoryForm')}>Create-Category</button>
+                  <button onClick={() => handleClick('OrderDetails')}>Order Recieved</button>
                                
                   </div>
                 )}
@@ -89,8 +97,8 @@ const AdminDashboard = () => {
               {renderComponent()} {/* Render the active component */}
             </div>
 
-          
-        </>
+            </div>
+      
    
     </>
   );

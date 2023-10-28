@@ -30,8 +30,7 @@
 .dashboard-main-content {
   flex-grow: 1;
   padding: 20px;
-  /* margin-left: 15%;
-  margin-top: -30%;  */
+ 
 }
 
 .dashboard-main-content > div {
@@ -51,6 +50,8 @@
 color: rgb(236, 73, 73);
 text-align: center;
 }
+
+
 
 @media (max-width: 768px) {
   .burger-menu {
@@ -79,16 +80,14 @@ text-align: center;
     border: 1px solid white;
   }
 
-  .dashboard-container {
-    flex-direction: column;
-  }
+  
 
   .dashboard-aside-menu {
     margin: 0;
-    width: 100%; /* Full width for small screens */
-    height: auto; /* Adjust height */
+    width: 100%;
+    height: auto; 
     position: static; 
-    display: none;/* Remove fixed position */
+    display: none;
   }
 
   .dashboard-main-content {
@@ -143,6 +142,9 @@ text-align: center;
   }
   .toggle-button{
     display: none;
+  }
+  .arrow-container{
+    visibility: hidden;
   }
 }
 
@@ -215,11 +217,13 @@ text-align: center;
     height: 100vh;
     transition: transform 0.3s ease;
     transform: translateX(-200px);
+    
 }
 
 .sidebar.open {
     transform: translateX(0);
 }
+
 
 ul {
     list-style: none;
@@ -244,3 +248,16 @@ padding: 10px;
 .sidebar-btn:hover{
    transform: scale(1.2);
 }
+
+.arrow-container{
+
+ width: 60px;
+ height: 100vh;
+ background-color: #e3dcdc;
+}
+
+
+
+
+
+
