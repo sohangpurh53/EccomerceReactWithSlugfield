@@ -1,53 +1,46 @@
-import React, { useEffect, useState } from 'react'
-import axiosInstance from '../utils/axiosInstance'
-import '../css/orderlist.css'
+import React, { useEffect, useState } from 'react';
+import axiosInstance from '../utils/axiosInstance';
+import { Table, Thead, Tbody, Tr, Th, Td } from "@chakra-ui/react"
 
 const OrderList = () => {
-    const [orderDetails, setOrderDetails] = useState([])
+  const [orderDetails, setOrderDetails] = useState([]);
 
-    // order data fetched
-    const fetchData = async ()=> {
-        try {
-            const orderData = await axiosInstance('list/order/').then(response=> response.data);
-        setOrderDetails(orderData)
-        } catch (error) {
-            console.log(`error while fetching order data ${error.message}`)
-        }
-        
+  // order data fetched
+  const fetchData = async () => {
+    try {
+      const orderData = await axiosInstance('list/order/').then(response => response.data);
+      setOrderDetails(orderData);
+    } catch (error) {
+      console.log(`error while fetching order data ${error.message}`);
     }
-  
-    useEffect(()=>{
-        fetchData()
-  
-    }, [])
-    
-  return (
-    <>
-    <div className="order-list-container">
-      
-    <table>
-        <thead>
-            <tr>
-                <th>Customer</th>
-                <th>Order Total</th>
-                <th>Customer Address</th>
-            </tr>
-        </thead>
-        <tbody>
-            {orderDetails.map(order =>(
-               <tr key={order.id}>
-                <td>{order.user}</td>
-                <td>{order.total_amount}</td>
-                <td>{order.shipping_address}</td>
-               </tr>
-            ))}
+  }
 
-        </tbody>
-    </table>
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  return (
+    <div className="order-list-container">
+      <Table variant="striped" colorScheme="teal">
+        <Thead>
+          <Tr>
+            <Th>Customer</Th>
+            <Th>Order Total</Th>
+            <Th>Customer Address</Th>
+          </Tr>
+        </Thead>
+        <Tbody>
+          {orderDetails.map(order => (
+            <Tr key={order.id}>
+              <Td>{order.user}</Td>
+              <Td>{order.total_amount}</Td>
+              <Td>{order.shipping_address}</Td>
+            </Tr>
+          ))}
+        </Tbody>
+      </Table>
     </div>
- 
-    </>
   )
 }
 
-export default OrderList
+export default OrderList;

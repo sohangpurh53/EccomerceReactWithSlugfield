@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import axiosInstance from '../utils/axiosInstance';
-import '../css/categories.css'
+// import '../css/categories.css'
 import {Link,  useParams } from 'react-router-dom';
 
 const ProductImageList = () => {

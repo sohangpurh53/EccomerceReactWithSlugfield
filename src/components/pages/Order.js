@@ -1,43 +1,55 @@
 import React, { useState, useEffect } from 'react';
 import axiosInstance from '../utils/axiosInstance';
 import { useNavigate } from 'react-router-dom';
-import '../css/order.css'
+import {
+  Box,
+  Button,
+  FormControl,
+  FormLabel,
+  Select,
+  Input,
+  VStack,
+  Text,
+} from "@chakra-ui/react"
 
+import Notification from '../utils/Notfication';
 
 function PlaceOrder() {
   const [addressChoice, setAddressChoice] = useState(''); // Track user's choice of address
   const [shippingAddress, setShippingAddress] = useState({
-     address:'', 
-     city:'',
-     state:'',
-     country:'', 
-     postal_code:'', 
-     mobile_no:'',
+    address: '',
+    city: '',
+    state: '',
+    country: '',
+    postal_code: '',
+    mobile_no: '',
   }); // Track new shipping address
-  const usenavigation = useNavigate()
+  const navigate  = useNavigate()
   const [shippingAddresses, setShippingAddresses] = useState([]); // Track existing shipping addresses
   const [orderPlaced, setOrderPlaced] = useState(false);
+  const [notification, setNotification] = useState('')
 
-
-  const createShippingAddress = (e)=>{
+  const createShippingAddress = (e) => {
     e.preventDefault();
     const data = {
-      address:shippingAddress.address,
-      city:shippingAddress.city,
-      state:shippingAddress.state,
-      country:shippingAddress.country,
-      postal_code:shippingAddress.postal_code,
-      mobile_no:shippingAddress.mobile_no,
+      address: shippingAddress.address,
+      city: shippingAddress.city,
+      state: shippingAddress.state,
+      country: shippingAddress.country,
+      postal_code: shippingAddress.postal_code,
+      mobile_no: shippingAddress.mobile_no,
     }
     console.log(data)
     try {
-      axiosInstance.post('create/shipping-address/', data).then(response=> {if(response.data){
-        usenavigation(0)
-      }})
+      axiosInstance.post('create/shipping-address/', data).then(response => {
+        if (response.data) {
+          setNotification('New Shipping Address Added Successfully');
+          navigate(0)
+        }
+      })
     } catch (error) {
       console.log(`error while create shipping address ${error}`)
     }
-
   }
 
   useEffect(() => {
@@ -49,6 +61,7 @@ function PlaceOrder() {
       .catch(error => {
         console.error('Error fetching shipping addresses:', error);
       });
+      
   }, []); // Empty dependency array means this effect runs once on component mount
 
   const handleAddressChange = (event) => {
@@ -56,10 +69,10 @@ function PlaceOrder() {
   };
 
   const handleShippingAddressChange = (e) => {
-  const {name, value} = e.target;
+    const { name, value } = e.target;
     setShippingAddress({
       ...shippingAddress,
-      [name]:value,
+      [name]: value,
     });
   };
 
@@ -74,6 +87,7 @@ function PlaceOrder() {
       .then(response => {
         setOrderPlaced(true);
         console.log('Order placed successfully:', response.data);
+        navigate('/')
       })
       .catch(error => {
         console.error('Error placing order:', error);
@@ -81,44 +95,38 @@ function PlaceOrder() {
   };
 
   if (orderPlaced) {
-     usenavigation('/')
+    <Notification message='Order Places successfully' />
   }
 
   return (
-    <div className='order-container'>
-      <h1>Place Your Order</h1>
-      <label>
-        Select Address:
-        <select value={addressChoice} onChange={handleAddressChange}>
-          <option value="">-- Select an address --</option>
-          {shippingAddresses.map(address => (
-            <option key={address.id} value={address.id}>{address.address}</option>
-          ))}
-          <option value="new">New Address</option>
-        </select>
-      </label>
-      {addressChoice === 'new' && (
-        <div className='address-container'>
-          <label>
-            New Address: </label>
-            
-         <label htmlFor="Address">Address <input type="text" placeholder='Please Write Your Address' name='address'  value={shippingAddress.address} onChange={handleShippingAddressChange} /></label> 
-         <label htmlFor="City"> City <input type="text" placeholder='Please Write Your City' name='city' value={shippingAddress.city} onChange={handleShippingAddressChange} /></label> 
-         <label htmlFor="State">State<input type="text" placeholder='Please Write Your State' name='state' value={shippingAddress.state} onChange={handleShippingAddressChange} /></label> 
-         <label htmlFor="Country">Country<input type="text" placeholder='Please Write Your Country' name='country'  value={shippingAddress.country} onChange={handleShippingAddressChange} /></label> 
-         <label htmlFor="Postal Code">Postal Code<input type="text" placeholder='Please Write Your Postal Code' name='postal_code' value={shippingAddress.postal_code} onChange={handleShippingAddressChange} /></label> 
-         <label htmlFor="Mobile No">Mobile No<input type="number" placeholder='Please Write Your Mobile Number' name='mobile_no' value={shippingAddress.mobile_no} onChange={handleShippingAddressChange} /></label> 
-          
-         
-
-         <button className='create-address-btn' onClick={createShippingAddress}>Create Address</button>
-
-        </div>
-        
-      )}
-      {addressChoice === 'new'? (''):(<button className='order-btn' onClick={handlePlaceOrder}>Place Order</button>)} 
-      
-    </div>
+    <Box className='order-container'>
+      <Notification message={notification} />
+      <VStack spacing={4}>
+        <Text fontSize="xl">Place Your Order</Text>
+        <FormControl>
+          <FormLabel>Select Address:</FormLabel>
+          <Select value={addressChoice} onChange={handleAddressChange}>
+            <option value="">-- Select an address --</option>
+            {shippingAddresses.map(address => (
+              <option key={address.id} value={address.id}>{address.address}</option>
+            ))}
+            <option value="new">New Address</option>
+          </Select>
+        </FormControl>
+        {addressChoice === 'new' && (
+          <VStack spacing={2} className='address-container'>
+            <Input type="text" placeholder="Please Write Your Address" name='address' value={shippingAddress.address} onChange={handleShippingAddressChange} />
+            <Input type="text" placeholder="Please Write Your City" name='city' value={shippingAddress.city} onChange={handleShippingAddressChange} />
+            <Input type="text" placeholder="Please Write Your State" name='state' value={shippingAddress.state} onChange={handleShippingAddressChange} />
+            <Input type="text" placeholder="Please Write Your Country" name='country' value={shippingAddress.country} onChange={handleShippingAddressChange} />
+            <Input type="text" placeholder="Please Write Your Postal Code" name='postal_code' value={shippingAddress.postal_code} onChange={handleShippingAddressChange} />
+            <Input type="number" placeholder="Please Write Your Mobile Number" name='mobile_no' value={shippingAddress.mobile_no} onChange={handleShippingAddressChange} />
+            <Button colorScheme="teal" onClick={createShippingAddress}>Create Address</Button>
+          </VStack>
+        )}
+        {addressChoice === 'new' ? ('') : (<Button colorScheme="teal" onClick={handlePlaceOrder}>Place Order</Button>)}
+      </VStack>
+    </Box>
   );
 }
 

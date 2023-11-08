@@ -1,20 +1,22 @@
-import React, { useEffect, useState } from 'react'
-import '../css/notification.css'
+import { useEffect } from 'react';
+import { useToast } from '@chakra-ui/react';
 
-const Notfication = ({message}) => {
-    const [show, setShow] = useState(false)
-    useEffect(() => {
-        if (message){
-            setShow(true);
-            setTimeout(()=> setShow(false), 2000)
-        }
+const Notification = ({ message }) => {
+  const toast = useToast();
 
-    }, [message])
-  return (
-    <div className={`notification ${show ? 'show' : 'hide'}`}>
-      {message}
-    </div>
-  )
-}
+  useEffect(() => {
+    if (message) {
+      toast({
+        title: message,
+        status: 'success',
+        position: 'top',
+        duration: 2000,
+        isClosable: true,
+      });
+    }
+  }, [message, toast]);
 
-export default Notfication
+  return null;
+};
+
+export default Notification;

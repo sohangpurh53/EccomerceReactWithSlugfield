@@ -1,112 +1,101 @@
-import React, { useEffect, useState } from 'react'
-import '../css/userprofile.css'
+import React, { useEffect, useState } from 'react';
 import axiosInstance from '../utils/axiosInstance';
-import {useAuth} from '../context/Authcontext'
+import { useAuth } from '../context/Authcontext';
+import {
+  Box,
+  Heading,
+  Text,
+  List,
+  ListItem,
+  Badge,
+  Image,
+} from '@chakra-ui/react';
 
 const UserProfile = () => {
-    const [userDetails, setUserDetails] = useState([]);
-    const [userAddress, setUserAddress] = useState([]);
-    const {accessToken} = useAuth()
-    useEffect(()=>{
+  const [userDetails, setUserDetails] = useState([]);
+  const [userAddress, setUserAddress] = useState([]);
+  const { accessToken } = useAuth();
 
-        if (accessToken){
-            const fetchData = async ()=>{
-
-            try {
-                const user = await axiosInstance('user/profile/').then(response=> response.data);
-                const useraddress = await axiosInstance('user/shipping-address/').then(response=> response.data);
-                setUserDetails(user);
-                setUserAddress(useraddress)
-            } catch (error) {
-                console.log(error)
-            }
+  useEffect(() => {
+    if (accessToken) {
+      const fetchData = async () => {
+        try {
+          const user = await axiosInstance('user/profile/').then((response) => response.data);
+          const useraddress = await axiosInstance('user/shipping-address/').then((response) => response.data);
+          setUserDetails(user);
+          setUserAddress(useraddress);
+        } catch (error) {
+          console.log(error);
         }
-        fetchData()
-        }
-        else{
-           window.location.href = '/signin'
-        }
-        
-
-    }, [accessToken])
-
-    
+      };
+      fetchData();
+    } else {
+      window.location.href = '/signin';
+    }
+  }, [accessToken]);
 
   return (
-    <>
+    <Box maxW="800px" mx="auto" p={4}>
+      <Heading mb={4}>Welcome, {userDetails.username}!</Heading>
+      <Text>
+        {userDetails.first_name} {userDetails.last_name}
+        <br />
+        Email: {userDetails.email}
+      </Text>
 
+      {userAddress.map((address) => (
+        <Box key={address.id} mt={8} border="1px" borderColor="gray.200" p={4}>
+          <Heading size="md">Shipping Address</Heading>
+          <Text>
+            <strong>Address:</strong> {address.address}
+            <br />
+            <strong>City:</strong> {address.city}
+            <br />
+            <strong>State:</strong> {address.state}
+            <br />
+            <strong>Country:</strong> {address.country}
+            <br />
+            <strong>Postal Code:</strong> {address.postal_code}
+          </Text>
+        </Box>
+      ))}
 
-  
- <div className="container">
-        <div className="profile-info">
-            <h1>Welcome, {userDetails.username}!</h1>
-            <p>{userDetails.first_name} {userDetails.last_name}</p> 
-            <p>Email:{userDetails.email}</p> 
-  
+      <Heading mt={8} mb={4} size="md">
+        Your Orders:
+      </Heading>
+      <List styleType="none" pl={0}>
+        {/* Replace these dummy values with actual order data */}
+        <ListItem mb={4}>
+          <Image src="url_to_product_image" alt="Product" boxSize="50px" mr={4} />
+          <Text display="inline-block" verticalAlign="top">
+            Quantity:
+            <br />
+            Product:
+            <br />
+            Order ID:
+            <br />
+            Order Status:{' '}
+            <Badge colorScheme="green" variant="solid">
+              Order Successful
+            </Badge>
+          </Text>
+        </ListItem>
+      </List>
 
-     {userAddress.map(address=>(
-        <div key={address.id} className="address-section">
-        <h2>Shipping Address</h2>
-        <p><strong>Address:</strong>{address.address} </p>  
-        <p><strong>City:</strong>{address.city} </p>
-        <p><strong>State:</strong> {address.state}</p>
-        <p><strong>Country:</strong> {address.country}</p>
-        <p><strong>Postal Code:</strong>{address.postal_code} </p> 
-        </div>
-     ))}
-      
-   
-    
-        </div>
-        <h4>Your Orders:</h4>
+      <Box mt={8}>
+        <Heading size="md">Your Reviews:</Heading>
+        <List pl={0}>
+          {/* Replace these dummy values with actual review data */}
+          <ListItem>
+            <Text>Product:</Text>
+            <Text>Rating:</Text>
+            <Text>Comment:</Text>
+          </ListItem>
+          <ListItem>No reviews yet.</ListItem>
+        </List>
+      </Box>
+    </Box>
+  );
+};
 
-            <ol id="user-order">
-               
-            
-               <p id="user-total">Total Amount: &#8377;</p> 
-                <ul>
-                   
-                        <li>
-                            <img className="product-img" src=" " alt="" />
-                           
-                            <span>Quantity: </span><p>Product: </p> 
-                            <p>Order ID: </p>
-                            <p>Order Status: 
-                                
-                                <span className="completed-status">Order Successfull</span>
-                                
-                                <span className="pending-status">Pending</span>
-                            
-                            </p>
-                            <p> </p>
-                             View order
-                        </li>
-                       
-                        
-              
-                </ul>
-        
-            </ol>
-           
-        <div className="profile-reviews">
-            <h2>Your Reviews:</h2>
-            <ul>
-               
-                    <li>
-                        <p>Product: </p>
-                        <p>Rating: </p>
-                        <p>Comment: </p>
-                    </li>
-             
-                    <li>No reviews yet.</li>
-               
-            </ul>
-        </div>
-    </div>
-
-    
-    </>
-  )
-}
-
-export default UserProfile
+export default UserProfile;

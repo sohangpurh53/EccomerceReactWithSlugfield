@@ -1,61 +1,82 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 import axiosInstance from '../utils/axiosInstance';
 import { Link } from 'react-router-dom';
-import '../css/product.css'
+import {
+  Box,
+  Table,
+  Thead,
+  Tbody,
+  Tr,
+  Th,
+  Td,
+  Button,
+} from "@chakra-ui/react";
 
 const ListProducts = () => {
-    const [productDetails, setProductDetails] = useState([]);
-    useEffect(()=>{
-        const fetchData = async ()=>{
-            const product = await axiosInstance('list/product/').then(response => response.data);
-            setProductDetails(product);
-        }
-        fetchData()
+  const [productDetails, setProductDetails] = useState([]);
 
-    }, [])
+  useEffect(() => {
+    const fetchData = async () => {
+      const product = await axiosInstance('list/product/').then(response => response.data);
+      setProductDetails(product);
+    }
+    fetchData();
+  }, []);
+
   return (
-    <>
-    <div className="products-table-container">
-        <div className="table-wrapper"> 
-            <div className="data-table">
-            <table> 
-                <thead>
-                    <tr>
-                     <th>Index</th>
-                    <th>Name</th>
-                    <th>Description</th>
-                    <th>Price</th>
-                    <th>Shipping Fee</th>
-                    <th>Stock</th>
-                    </tr>
-                    
-            </thead>
-            {productDetails.map((product, index)=>(
-                 <tbody key={product.id}>
-                    <tr>
-                    <td> {index + 1} </td>
-                    <td>{product.name} </td>
-                    <td>{product.description} </td>
-                    <td>{product.price} </td>
-                    <td>{product.shipping_fee} </td>
-                    <td>{product.stock} </td>
-                    <td><Link className='btn-update' to={`/product/update/${product.slug}/`}>Update</Link></td>
-                    <td><Link className='btn-delete' to={`/product/delete/${product.slug}/`}>Delete</Link></td>
-                    <td><Link className='btn-image' to={`/product/images/${product.slug}/`}>Images</Link></td>
-                    </tr>
-                </tbody>
-            ))}
-            </table>
-
-             </div>
-            </div>
-           </div>
-
-
-
-
-    </>
+    <Box className="products-table-container">
+      {/* <div className="table-wrapper">
+        <div className="data-table"> */}
+          <Table variant="simple">
+            <Thead>
+              <Tr>
+                <Th>Index</Th>
+                <Th>Name</Th>
+                <Th>Description</Th>
+                <Th>Price</Th>
+                <Th>Shipping Fee</Th>
+                <Th>Stock</Th>
+                <Th>Actions</Th>
+              </Tr>
+            </Thead>
+            <Tbody>
+              {productDetails.map((product, index) => (
+                <Tr key={product.id}>
+                  <Td>{index + 1}</Td>
+                  <Td>{product.name}</Td>
+                  <Td>{product.description}</Td>
+                  <Td>{product.price}</Td>
+                  <Td>{product.shipping_fee}</Td>
+                  <Td>{product.stock}</Td>
+                  <Td>
+                    <Link to={`/product/update/${product.slug}`}>
+                      <Button colorScheme="teal" variant="outline">
+                        Update
+                      </Button>
+                    </Link>
+                  </Td>
+                  <Td>
+                    <Link to={`/product/delete/${product.slug}`}>
+                      <Button colorScheme="red" variant="outline">
+                        Delete
+                      </Button>
+                    </Link>
+                  </Td>
+                  <Td>
+                    <Link to={`/product/images/${product.slug}`}>
+                      <Button colorScheme="blue" variant="outline">
+                        Images
+                      </Button>
+                    </Link>
+                  </Td>
+                </Tr>
+              ))}
+            </Tbody>
+          </Table>
+        {/* </div>
+      </div> */}
+    </Box>
   )
 }
 
-export default ListProducts
+export default ListProducts;

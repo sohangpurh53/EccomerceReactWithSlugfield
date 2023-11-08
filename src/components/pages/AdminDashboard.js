@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import ProductForm from '../forms/productForm'
 import CategoryForm from '../forms/categoryForm';
-import '../css/dashboard.css'
+// import '../css/dashboard.css'
 import OrderList from './Orders';
 
 

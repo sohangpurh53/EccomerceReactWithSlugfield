@@ -1,50 +1,69 @@
-import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import axiosInstance from '../utils/axiosInstance';
-import '../css/delete.css';
+import { Box, Button } from '@chakra-ui/react';
 
 const DeleteImageProduct = () => {
-    const {id} = useParams()
-    const [deleteProduct, setDeleteProduct] = useState(null);
+  const { id } = useParams();
+  const [deleteProduct, setDeleteProduct] = useState(null);
 
-    useEffect(()=>{
-        const fetchdata = async ()=>{
-            try {
-                const product = await axiosInstance(`delete/product/image/${id}/`);
-                setDeleteProduct(product)
-            } catch (error) {
-                console.log(`error while fetch product ${error}`)
-            }
-        }
-        fetchdata()
-    }, [id])
+  useEffect(() => {
+    const fetchdata = async () => {
+      try {
+        const product = await axiosInstance(`delete/product/image/${id}/`);
+        setDeleteProduct(product);
+      } catch (error) {
+        console.log(`error while fetching product ${error}`);
+      }
+    };
+    fetchdata();
+  }, [id]);
 
-   
-    const handleDelete = async ()=>{
-        try {
-            await axiosInstance.delete(`delete/product/image/${id}/`).then(response=> {if (response){
-                setTimeout(()=> {window.location.href = '/products/'}, 250)
-            }})
-        } catch (error) {
-            console.log(error)
+  const handleDelete = async () => {
+    try {
+      await axiosInstance.delete(`delete/product/image/${id}/`).then((response) => {
+        if (response) {
+          setTimeout(() => {
+            window.location.href = '/products/';
+          }, 250);
         }
+      });
+    } catch (error) {
+      console.log(error);
     }
+  };
 
-    
   return (
     <>
-   
-    <div className="confirmation-box">
-            {deleteProduct && (
-                <>
-                    <p>Are you sure you want to delete ?</p>
-                    <button className='delete' onClick={handleDelete}>Delete</button>
-                    <button className='cancel' onClick={() => window.location.href = `/products/`}>Cancel</button>
-                </>
-            )}
-        </div>
+      <Box
+        className="confirmation-box"
+        p={4}
+        maxW="container.sm"
+        mx="auto"
+        textAlign="center"
+      >
+        {deleteProduct && (
+          <>
+            <p>Are you sure you want to delete?</p>
+            <Button
+              className="delete"
+              onClick={handleDelete}
+              colorScheme="red"
+              mr={2}
+            >
+              Delete
+            </Button>
+            <Button
+              className="cancel"
+              onClick={() => (window.location.href = `/products/`)}
+            >
+              Cancel
+            </Button>
+          </>
+        )}
+      </Box>
     </>
-  )
-}
+  );
+};
 
-export default DeleteImageProduct
+export default DeleteImageProduct;
