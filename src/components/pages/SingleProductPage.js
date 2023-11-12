@@ -57,8 +57,8 @@ const SingleProductPage = () => {
       <Box maxW="container.xl" mx="auto" p={4}>
         <Notification message={notification} />
         <Box display="flex" flexDirection={{ base: 'column', md: 'row' }}>
-          <Box flex="1" mb={{ base: 4, md: 0 }} maxW='400px' h='auto' objectFit={'contain'} textAlign="center">
-            <Image src={productImage[currentImageIndex]?.image} boxSize="100%" alt="" />
+          <Box flex="1" maxW={{ base: 'md', md: 'md', lg: 'lg' }} h={'md'}   textAlign="center">
+            <Image src={productImage[currentImageIndex]?.image}  objectFit={'contain'} boxSize="100%" alt="" />
             <Button onClick={handlePrevClick} mt={2} mr={2}>
               Previous
             </Button>

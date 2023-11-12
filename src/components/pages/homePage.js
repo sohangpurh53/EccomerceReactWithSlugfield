@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Button, Image } from '@chakra-ui/react';
+import { Box, Text, Button, Image, Flex } from '@chakra-ui/react';
 import axiosInstance from '../utils/axiosInstance';
 import { Link } from 'react-router-dom';
+import PageLoadingAnimation from '../utils/LoadingAnimation';
 
 const HomePage = () => {
   const [productDetails, setProductDetails] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [nextPage, setNextPage] = useState(true);
   const [previousPage, setPreviousPage] = useState(false);
-
+  const [isLoading, setIsLoading] = useState(true)
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -35,16 +36,22 @@ const HomePage = () => {
     }
   };
 
+  if(isLoading){
+    <PageLoadingAnimation/>
+  }else{
+    setIsLoading(false)
+  }
+
   return (
-    <Box className="container" maxW="container.xl" mx="auto">
+    <Flex gap={'5px'}>
       {productDetails.map((product) => (
-        <Box maxW='100px' h='auto'  key={product.id} className="product-card">
-          <Image boxSize='100%' src={`http://localhost:8000/${product.first_image}`} alt="" />
+        <Box flexDirection={'column'} display={'flex'} alignItems={'center'}  maxW='100px' h='auto' boxShadow={'10px 5px 5px gray'}  key={product.id} className="product-card">
+          <Image mt={2} boxSize='50%' src={`http://localhost:8000/${product.first_image}`} alt="" />
           <Box className="title-container">
-            <h3>{product.name}</h3>
+            <Text color={'gray.600'}> {product.name}</Text>
           </Box>
-          <p className="price">&#8377;{product.price}</p>
-       <Button colorScheme='teal'> <Link to={`/product/${product.slug}/`}>View</Link></Button>  
+          <Text  color={'gray.600'} fontSize={'sm'} className="price">&#8377;{product.price}</Text>
+       <Button mb={2} width={'50%'} colorScheme='teal'> <Link to={`/product/${product.slug}/`}>View</Link></Button>  
         </Box>
       ))}
       <Box className="pagination" mt={4} display="flex" alignItems="center" justifyContent="center">
@@ -60,7 +67,7 @@ const HomePage = () => {
           </Button>
         )}
       </Box>
-    </Box>
+    </Flex>
   );
 };
 

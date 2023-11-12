@@ -10,12 +10,7 @@ const Footer = () => {
           <ListItem display="inline" mx={2}>
             <Link to="/" as={ChakraLink}>HomePage</Link>
           </ListItem>
-          <ListItem display="inline" mx={2}>
-            <Link to="/signin" as={ChakraLink}>SignIn</Link>
-          </ListItem>
-          <ListItem display="inline" mx={2}>
-            <Link to="/signout" as={ChakraLink}>SignOut</Link>
-          </ListItem>
+       
         </UnorderedList>
       </Box>
     </Box>

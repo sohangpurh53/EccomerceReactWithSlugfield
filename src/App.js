@@ -6,22 +6,22 @@ import SignOutComponent from './components/auth/signOut';
 import HomePage from './components/pages/homePage';
 import Header from './components/Header';
 import Footer from './components/Footer';
-import ProductForm from './components/forms/productForm';
-import CategoryForm from './components/forms/categoryForm';
+import ProductForm from './components/AdminDashboard/forms/productForm';
+import CategoryForm from './components/AdminDashboard/forms/categoryForm';
 import SingleProductPage from './components/pages/SingleProductPage';
-import ProductImageForm from './components/forms/productImageForm';
+import ProductImageForm from './components/AdminDashboard/forms/productImageForm';
 import UserProfile from './components/pages/userProfile';
-import UpdateCategoryForm from './components/forms/updateCategory';
-import UpdateProductForm from './components/forms/updateProduct';
-import Categories from './components/pages/listCategories.js';
-import ListProducts from './components/pages/listProducts';
-import DeleteCategory from './components/forms/deleteCategory';
-import DeleteProduct from './components/forms/deleteProduct';
-import ProductImageList from './components/pages/listProductImage';
-import DeleteImageProduct from './components/forms/deleteProductImage';
+import UpdateCategoryForm from './components/AdminDashboard/forms/updateCategory';
+import UpdateProductForm from './components/AdminDashboard/forms/updateProduct';
+import Categories from './components/AdminDashboard/AdminlistCategories.js';
+import ListProducts from './components/AdminDashboard/AdminlistProducts.js';
+import DeleteCategory from './components/AdminDashboard/forms/deleteCategory';
+import DeleteProduct from './components/AdminDashboard/forms/deleteProduct';
+import ProductImageList from './components/AdminDashboard/AdminlistProductImage.js';
+import DeleteImageProduct from './components/AdminDashboard/forms/deleteProductImage';
 import Cart from './components/pages/Cart';
 import Order from './components/pages/Order';
-import AdminDashboard from './components/pages/AdminDashboard';
+import AdminDashboard from './components/AdminDashboard/AdminDashboard.js';
 
 function App() {
   return (
@@ -51,7 +51,7 @@ function App() {
       <Route path='/user/profile/' element={<UserProfile/>}/>
       <Route path='/cart/' element={<Cart/>} ></Route>
       <Route path='/order/' element={<Order/>} ></Route>
-      <Route path='/user/dashboard/' element={<AdminDashboard/>} ></Route>
+      <Route path='/admin/dashboard/' element={<AdminDashboard/>} ></Route>
       
     
      </Routes>

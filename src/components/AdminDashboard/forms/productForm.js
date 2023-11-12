@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import axiosInstance from '../utils/axiosInstance';
-import Notfication from '../utils/Notfication';
+import axiosInstance from '../../utils/axiosInstance';
+import Notfication from '../../utils/Notfication';
 import { Box, Input, Button, Select, FormControl, FormLabel } from '@chakra-ui/react';
 
 const ProductForm = () => {
@@ -80,7 +80,7 @@ const ProductForm = () => {
   };
 
   return (
-    <Box maxW="600px" mx="auto" p={4}>
+    <Box maxW="500px" mx="auto" p={4}>
       <Notfication message={notification} />
       <form>
         <FormControl mb={4}>

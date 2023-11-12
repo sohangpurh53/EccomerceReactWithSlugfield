@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import axiosInstance from '../utils/axiosInstance';
+import axiosInstance from '../../utils/axiosInstance';
 import { Box, Button, Input } from '@chakra-ui/react';
-import Notification from '../utils/Notfication';
+import Notification from '../../utils/Notfication';
 
 const CategoryForm = () => {
   const [notification, setNotification] = useState('');
@@ -53,7 +53,7 @@ const CategoryForm = () => {
               onChange={handleChange}
             />
           </div>
-          <Button colorScheme="teal" onClick={handleSubmit}>
+          <Button mt={2.5} colorScheme="teal" onClick={handleSubmit}>
             Create Category
           </Button>
         </form>

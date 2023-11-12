@@ -99,7 +99,7 @@ function PlaceOrder() {
   }
 
   return (
-    <Box className='order-container'>
+    <Box my={25} mx={'auto'} maxW={{base: 'md', md: 'md', lg: 'lg'}}>
       <Notification message={notification} />
       <VStack spacing={4}>
         <Text fontSize="xl">Place Your Order</Text>

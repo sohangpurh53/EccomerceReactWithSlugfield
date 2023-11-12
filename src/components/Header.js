@@ -25,6 +25,16 @@ const Header = () => {
               Home
             </ChakraLink>
           </li>
+          <li style={{ display: 'inline-block', marginRight: '1rem' }}>
+            <ChakraLink as={Link} to="/cart/">
+              Cart
+            </ChakraLink>
+          </li>
+          <li style={{ display: 'inline-block', marginRight: '1rem' }}>
+            <ChakraLink as={Link} to="/admin/dashboard/">
+              Admin-Dashboard
+            </ChakraLink>
+          </li>
          
         </ul>
 

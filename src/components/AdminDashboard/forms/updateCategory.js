@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import axiosInstance from '../utils/axiosInstance';
-import Notification from '../utils/Notfication';
+import axiosInstance from '../../utils/axiosInstance';
+import Notification from '../../utils/Notfication';
 import { useParams } from 'react-router-dom';
 import { Box, Input, Button } from '@chakra-ui/react';
 

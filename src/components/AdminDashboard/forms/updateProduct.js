@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axiosInstance from '../utils/axiosInstance';
+import axiosInstance from '../../utils/axiosInstance';
 import {
   Box,
   FormControl,
@@ -8,7 +8,7 @@ import {
   Select,
   Button,
 } from '@chakra-ui/react';
-import Notification from '../utils/Notfication';
+import Notification from '../../utils/Notfication';
 import { useParams } from 'react-router-dom';
 
 const UpdateProductForm = () => {

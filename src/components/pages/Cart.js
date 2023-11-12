@@ -10,7 +10,8 @@ import {
 } from "@chakra-ui/react";
 import Notification from '../utils/Notfication';
 import { useNavigate } from 'react-router-dom';
-import { PlusSquareIcon, MinusIcon} from '@chakra-ui/icons'
+import { AddIcon, MinusIcon} from '@chakra-ui/icons'
+import { BiCart } from 'react-icons/bi';
 
 const Cart = () => {
   const [cartDetails, setCartDetails] = useState({ cart_items: [] });
@@ -80,12 +81,12 @@ const Cart = () => {
   }, [])
 
   return (
-    <Box className="cart-container">
+    <Flex className="cart-container"  justifyContent={'space-around'}>
       <Notification message={notification} />
 
       <Heading as="h1" mb="4">Cart</Heading>
 
-      <Flex direction="column" align="stretch">
+      <Flex direction="column" justifyContent={'center'} alignItems={'center'}>
         {cart_items.length > 0 ? (cart_items.map(item => (
           <Box className="cart-item" key={item.id} mb="4">
             <Heading as="h3" size="md">Item name: {item.product.name}</Heading>
@@ -93,20 +94,25 @@ const Cart = () => {
             <Text>Price: ₹{item.product.price}</Text>
             <Text>Quantity: {item.quantity}</Text>
             <Flex justify="space-between" mt="2">
-              <Button colorScheme="teal" size="sm" onClick={(e) => reduceCartItem(e, item.id)}><MinusIcon/>Reduce Quantity</Button>
-              <Button colorScheme="teal" size="sm" onClick={(e) => addToCart(e, item.product.id)}><PlusSquareIcon/>Add to Cart</Button>
+              <Button colorScheme="teal" size="sm" onClick={(e) => reduceCartItem(e, item.id)}><MinusIcon/></Button>
+              <Text>{item.quantity}</Text>
+              <Button colorScheme="teal" size="sm" onClick={(e) => addToCart(e, item.product.id)}><AddIcon/></Button>
               <Button colorScheme="red" size="sm" onClick={(e) => removeCartItem(e, item.id)}>Remove</Button>
             </Flex>
           </Box>
         ))) : (
-          <Text className="missing-message" mt="4" color="red.500">
-            Missing Cart items? <Link to={'/'}>Add Product to cart</Link>
-          </Text>
+          <Box float={'left'}><Text  mt="4" color="red.500">
+            Missing Cart items? 
+            <BiCart fontSize={'50px'}/>
+            
+          </Text><Button as={Link} to={'/'}>Add Product to cart </Button>
+          </Box>
+          
         )}
       </Flex>
 
       {cart_items.length > 0 ? (
-        <Box className="order-summary" mt="4">
+        <Box className="order-summary" mt="4" >
           <Heading as="h2" size="md" mb="2">Order Summary</Heading>
           <Flex justify="space-between" mb="2">
             <Text>Subtotal:</Text>
@@ -125,7 +131,7 @@ const Cart = () => {
           </Link>
         </Box>
       ) : ('')}
-    </Box>
+    </Flex>
   );
 };
 
