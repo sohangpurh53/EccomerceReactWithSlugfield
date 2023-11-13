@@ -29,6 +29,18 @@ function PlaceOrder() {
   const [orderPlaced, setOrderPlaced] = useState(false);
   const [notification, setNotification] = useState('')
 
+  const [orderDetails, setOrderDetails] = useState([])
+
+  useEffect(()=>{
+
+    const fetchOrder = async ()=>{
+     const data = await axiosInstance.get('list/cart-item/').then(response=> response.data)
+     console.log(data)
+    }
+    fetchOrder()
+
+  },[])
+
   const createShippingAddress = (e) => {
     e.preventDefault();
     const data = {
@@ -39,7 +51,7 @@ function PlaceOrder() {
       postal_code: shippingAddress.postal_code,
       mobile_no: shippingAddress.mobile_no,
     }
-    console.log(data)
+   
     try {
       axiosInstance.post('create/shipping-address/', data).then(response => {
         if (response.data) {

@@ -34,6 +34,7 @@ const UserProfile = () => {
     }
   }, [accessToken]);
 
+  console.log(userDetails)
   return (
     <Box maxW="800px" mx="auto" p={4}>
       <Heading mb={4}>Welcome, {userDetails.username}!</Heading>

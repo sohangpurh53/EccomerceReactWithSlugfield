@@ -43,14 +43,15 @@ const HomePage = () => {
   }
 
   return (
-    <Flex gap={'5px'}>
+    <Box bg={'gray.100'} h={'100vh'}> 
+    <Flex >
       {productDetails.map((product) => (
-        <Box flexDirection={'column'} display={'flex'} alignItems={'center'}  maxW='100px' h='auto' boxShadow={'10px 5px 5px gray'}  key={product.id} className="product-card">
+        <Box flexDirection={'column'} mx={3} mt={'2'} display={'flex'} alignItems={'center'}  maxW='100px' h='auto' borderWidth={'1px'} borderColor={'teal.300'} key={product.id} className="product-card">
           <Image mt={2} boxSize='50%' src={`http://localhost:8000/${product.first_image}`} alt="" />
           <Box className="title-container">
-            <Text color={'gray.600'}> {product.name}</Text>
+            <Text color={'blue.700'}> {product.name}</Text>
           </Box>
-          <Text  color={'gray.600'} fontSize={'sm'} className="price">&#8377;{product.price}</Text>
+          <Text  color={'blue.700'} fontSize={'sm'} className="price">&#8377;{product.price}</Text>
        <Button mb={2} width={'50%'} colorScheme='teal'> <Link to={`/product/${product.slug}/`}>View</Link></Button>  
         </Box>
       ))}
@@ -68,6 +69,8 @@ const HomePage = () => {
         )}
       </Box>
     </Flex>
+
+    </Box>
   );
 };
 

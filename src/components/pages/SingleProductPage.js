@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { Box, Button, Image } from '@chakra-ui/react';
 import axiosInstance from '../utils/axiosInstance';
 import Notification from '../utils/Notfication';
@@ -76,7 +76,7 @@ const SingleProductPage = () => {
               <Button onClick={addToCart} mb={{ base: 2, md: 0 }} mr={{ md: 2 }}>
                 <i className="fas fa-cart-plus"></i> Add to Cart
               </Button>
-              <Button>Buy Now</Button>
+              <Button as={Link} to={'/cart/'}> Checkout Now</Button>
             </Box>
           </Box>
         </Box>

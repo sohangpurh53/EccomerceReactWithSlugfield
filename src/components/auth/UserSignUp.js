@@ -58,7 +58,7 @@ console.log(userData)
 return (
   <Flex
     minH={'100vh'}
-    align={'center'}
+    // align={'center'}
     justify={'center'}
     bg={useColorModeValue('gray.50', 'gray.800')}>
       <Notification message={notification}/>

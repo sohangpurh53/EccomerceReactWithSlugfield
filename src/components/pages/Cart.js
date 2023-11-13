@@ -27,7 +27,9 @@ const Cart = () => {
     }
   }
 
+
   const cart_items = cartDetails.cart_items
+
 
   const addToCart = async (e, product_id) => {
     e.preventDefault();
