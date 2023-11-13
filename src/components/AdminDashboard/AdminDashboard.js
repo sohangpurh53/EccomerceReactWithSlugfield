@@ -5,7 +5,7 @@ import {
   IconButton,
   VStack,
   HStack,
-  Center,
+  
   useDisclosure,
 } from '@chakra-ui/react';
 import { BiSidebar } from 'react-icons/bi';
@@ -39,32 +39,31 @@ const AdminDashboard = () => {
 
   return (
     <>
-      <Box display="flex" flexDirection="row" height="100vh" >
+      <Box
+        display="flex"
+        flexDirection={{ base: 'column', md: 'row' }}
+        height="100vh"
+      >
 
-        <HStack p="4" bg="gray.700" color="white" w={'50px'} >
+        <HStack p="4" bg="gray.700" color="white" w={{ base: '100%', md: '7.5%', lg:'5%' }}>
           <IconButton
             icon={isOpen ? <CloseIcon />: <BiSidebar />}
             onClick={onToggle}
             aria-label="Toggle Navigation Bar"
-           
           />
-          <Center flex="1">
-            <Button onClick={onToggle} visibility={'hidden'}>
-              {isOpen ? 'Close Menu' : 'Open Menu'}
-            </Button>
-          </Center>
         </HStack>
-
 
         <VStack
           spacing={4}
           align="start"
           bg="gray.700"
           color="white"
-          width={isOpen ? '10%' : '0'}
+          width={isOpen ? { base: '100%', md: '20%' } : '0'}
           p="4"
           transition="width 0.3s ease"
           overflow="hidden"
+          visibility={isOpen ? 'visible' : 'hidden'}
+          
         >
           {isOpen && (
             <>
