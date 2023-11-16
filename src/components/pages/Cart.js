@@ -6,6 +6,7 @@ import {
   Button,
   Flex,
   Heading,
+  Image,
   Text,
 } from "@chakra-ui/react";
 import Notification from '../utils/Notfication';
@@ -21,6 +22,7 @@ const Cart = () => {
   const fetchData = async () => {
     try {
       const cart = await axiosInstance('create/cart/').then(response => response.data);
+      
       setCartDetails(cart);
     } catch (error) {
       console.log(error)
@@ -92,6 +94,15 @@ const Cart = () => {
         {cart_items.length > 0 ? (cart_items.map(item => (
           <Box className="cart-item" key={item.id} mb="4">
             <Heading as="h3" size="md">Item name: {item.product.name}</Heading>
+            <Box h='50px' w='50px'>
+              <Image
+              src={`http://127.0.0.1:8000${item.product.first_image}`}
+              objectFit={'contain'}
+              boxSize='100%'
+              />
+
+             
+            </Box>
             <Text>Description: {item.product.description}</Text>
             <Text>Price: ₹{item.product.price}</Text>
             <Text>Quantity: {item.quantity}</Text>

@@ -15,6 +15,8 @@ import CategoryForm from './forms/categoryForm';
 import OrderList from './AdminOrders';
 import { CloseIcon } from '@chakra-ui/icons';
 
+import ListProducts from './AdminlistProducts';
+
 const AdminDashboard = () => {
   const { isOpen, onToggle } = useDisclosure();
   const [activeComponent, setActiveComponent] = useState('TableDisplay');
@@ -32,6 +34,8 @@ const AdminDashboard = () => {
         return <CategoryForm />;
       case 'OrderDetails':
         return <OrderList />;
+      case 'ListProduct':
+        return <ListProducts />;
       default:
         return '';
     }
@@ -70,6 +74,7 @@ const AdminDashboard = () => {
               <Button onClick={() => handleClick('ProductForm')}>Create Product</Button>
               <Button onClick={() => handleClick('CategoryForm')}>Create Category</Button>
               <Button onClick={() => handleClick('OrderDetails')}>Orders Received</Button>
+              <Button onClick={() => handleClick('ListProduct')}>List-Product</Button>
             </>
           )}
         </VStack>

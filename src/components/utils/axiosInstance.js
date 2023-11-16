@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const baseURL = 'http://localhost:8000/api/';
 
-const axiosInstance = axios.create({
+const Instance = axios.create({
   baseURL: baseURL,
   timeout: 10000,
   headers: {
@@ -11,7 +11,7 @@ const axiosInstance = axios.create({
   },
 });
 
-axiosInstance.interceptors.request.use(
+Instance.interceptors.request.use(
   (config) => {
     const access_token = localStorage.getItem('access_token');
 
@@ -26,8 +26,8 @@ axiosInstance.interceptors.request.use(
   }
 );
 
-axiosInstance.interceptors.response.use(
-  (response) => {
+Instance.interceptors.response.use(
+  async (response) => {
     return response;
   },
   async function (error) {
@@ -40,16 +40,22 @@ axiosInstance.interceptors.response.use(
 
       if (refresh_token) {
         try {
-          const response = await axiosInstance.post('/token/refresh/', { refresh: refresh_token });
+          const response = await Instance.post('/token/refresh/', { refresh: refresh_token });
           const { access } = response.data;
 
           localStorage.setItem('access_token', access);
 
+          // Retry the original request with the new access token
           originalRequest.headers['Authorization'] = `Bearer ${access}`;
 
-          return axiosInstance(originalRequest);
-        } catch (error) {
-          console.log(error);
+          try {
+            const retryResponse = await Instance(originalRequest);
+            return retryResponse;
+          } catch (retryError) {
+            console.error('Error retrying original request:', retryError);
+          }
+        } catch (refreshError) {
+          console.error('Error refreshing token:', refreshError);
         }
       }
     }
@@ -58,4 +64,4 @@ axiosInstance.interceptors.response.use(
   }
 );
 
-export default axiosInstance;
+export default Instance;

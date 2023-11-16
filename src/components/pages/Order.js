@@ -7,12 +7,15 @@ import {
   FormControl,
   FormLabel,
   Select,
+  HStack,
   Input,
   VStack,
   Text,
 } from "@chakra-ui/react"
 
 import Notification from '../utils/Notfication';
+import { Container } from 'reactstrap';
+
 
 function PlaceOrder() {
   const [addressChoice, setAddressChoice] = useState(''); // Track user's choice of address
@@ -28,19 +31,24 @@ function PlaceOrder() {
   const [shippingAddresses, setShippingAddresses] = useState([]); // Track existing shipping addresses
   const [orderPlaced, setOrderPlaced] = useState(false);
   const [notification, setNotification] = useState('')
+  
 
   const [orderDetails, setOrderDetails] = useState([])
+ 
 
   useEffect(()=>{
 
     const fetchOrder = async ()=>{
      const data = await axiosInstance.get('list/cart-item/').then(response=> response.data)
-     console.log(data)
+     setOrderDetails(data)
     }
     fetchOrder()
 
   },[])
-
+  const orderTotalAmount = orderDetails.reduce(
+    (total, order) => total + order.product.price * order.quantity,
+    0
+  );
   const createShippingAddress = (e) => {
     e.preventDefault();
     const data = {
@@ -96,10 +104,13 @@ function PlaceOrder() {
     };
 
     axiosInstance.post('create/order/', data)
-      .then(response => {
+      .then(response => {if(response.data){
         setOrderPlaced(true);
-        console.log('Order placed successfully:', response.data);
         navigate('/')
+      }else{
+        console.log('something went wrong')
+      }
+        
       })
       .catch(error => {
         console.error('Error placing order:', error);
@@ -112,10 +123,33 @@ function PlaceOrder() {
 
   return (
     <Box my={25} mx={'auto'} maxW={{base: 'md', md: 'md', lg: 'lg'}}>
+        <Text fontSize="xl">Place Your Order</Text>
+     
+        <Container >    
+          {orderDetails.map(order=>(  
+    <Box key={order.id} borderWidth="1px" borderRadius="lg" p="4" m="4">
+        <VStack spacing="4" align="start">
+          <Text fontWeight="bold">{order.product.name}</Text>
+          <HStack>
+            <Text>Quantity: {order.quantity}</Text>
+            <Text>Price: ₹{order.product.price}</Text>
+          </HStack>
+          <Text>Total: ₹{order.product.price*order.quantity}</Text>
+        </VStack>
+      </Box>  
+          ))}
+          <Text fontSize={'16px'} fontStyle={'oblique'} textAlign={'center'}> Order Total Amount {orderTotalAmount}</Text>
+            </Container>
+
+        
+      
+
+
       <Notification message={notification} />
       <VStack spacing={4}>
-        <Text fontSize="xl">Place Your Order</Text>
+        
         <FormControl>
+          
           <FormLabel>Select Address:</FormLabel>
           <Select value={addressChoice} onChange={handleAddressChange}>
             <option value="">-- Select an address --</option>

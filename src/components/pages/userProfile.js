@@ -14,16 +14,22 @@ import {
 const UserProfile = () => {
   const [userDetails, setUserDetails] = useState([]);
   const [userAddress, setUserAddress] = useState([]);
+  const[userOrderDetails, setUserOrderDetails] = useState([])
   const { accessToken } = useAuth();
 
   useEffect(() => {
     if (accessToken) {
       const fetchData = async () => {
         try {
-          const user = await axiosInstance('user/profile/').then((response) => response.data);
-          const useraddress = await axiosInstance('user/shipping-address/').then((response) => response.data);
+          const [user, useraddress, userOrderData] = await Promise.all([
+             axiosInstance('user/profile/').then((response) => response.data),
+             axiosInstance('user/shipping-address/').then((response) => response.data),
+             axiosInstance('user/order/').then(response=> response.data),
+          ])
+         
           setUserDetails(user);
           setUserAddress(useraddress);
+          setUserOrderDetails(userOrderData)
         } catch (error) {
           console.log(error);
         }
@@ -33,8 +39,8 @@ const UserProfile = () => {
       window.location.href = '/signin';
     }
   }, [accessToken]);
-
-  console.log(userDetails)
+console.log(userOrderDetails)
+ 
   return (
     <Box maxW="800px" mx="auto" p={4}>
       <Heading mb={4}>Welcome, {userDetails.username}!</Heading>
@@ -64,24 +70,31 @@ const UserProfile = () => {
       <Heading mt={8} mb={4} size="md">
         Your Orders:
       </Heading>
-      <List styleType="none" pl={0}>
+      {userOrderDetails.map(order =>(
+         <List key={order.id} styleType="none" pl={0}>
         {/* Replace these dummy values with actual order data */}
         <ListItem mb={4}>
-          <Image src="url_to_product_image" alt="Product" boxSize="50px" mr={4} />
+        <Box h={'50px'} w={'50px'} ><Image src={`http://127.0.0.1:8000${order.product.first_image}`} alt="Product" objectFit={'contain'} boxSize="100%" mr={4} /></Box>  
           <Text display="inline-block" verticalAlign="top">
-            Quantity:
+            Quantity: {order.quantity}
             <br />
-            Product:
+            Product: {order.product.name}
             <br />
-            Order ID:
+            {/* Order ID:  */}
             <br />
-            Order Status:{' '}
-            <Badge colorScheme="green" variant="solid">
-              Order Successful
+            Order Status:
+            <Badge
+              ml={2}
+              colorScheme={order.order.is_paid ? 'green' : 'red'}
+              variant="solid"
+            >
+              {order.order.is_paid ? 'Order Successful' : 'Order Pending'}
             </Badge>
           </Text>
         </ListItem>
       </List>
+      ))}
+     
 
       <Box mt={8}>
         <Heading size="md">Your Reviews:</Heading>

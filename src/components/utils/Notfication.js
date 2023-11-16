@@ -10,7 +10,7 @@ const Notification = ({ message }) => {
         title: message,
         status: 'success',
         position: 'top',
-        duration: 2000,
+        duration: 5000,
         isClosable: true,
       });
     }

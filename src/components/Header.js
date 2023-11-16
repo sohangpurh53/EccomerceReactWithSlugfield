@@ -35,6 +35,11 @@ const Header = () => {
               Admin-Dashboard
             </ChakraLink>
           </li>
+          <li style={{ display: 'inline-block', marginRight: '1rem' }}>
+            <ChakraLink as={Link} to="/user/profile/">
+              User-Profile
+            </ChakraLink>
+          </li>
          
         </ul>
 

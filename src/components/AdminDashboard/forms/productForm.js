@@ -71,6 +71,16 @@ const ProductForm = () => {
       }).then(response => { if(response.data){
         setNotification(`Product Created Successfully ${response.data.name}`);
         setTimeout(()=>{setNotification('')}, 2000)
+        setProductData({
+          name: '',
+    description: '',
+    price: '',
+    shipping_fee: '',
+    stock: '',
+    category: '',
+    seller: '',
+    uploaded_images: '',
+        })
 
     }else{setNotification('Error while create product')}});
      

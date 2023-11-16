@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { Box, Button, Image } from '@chakra-ui/react';
+import { Box,Heading,Text, Button, Image, useToast } from '@chakra-ui/react';
 import axiosInstance from '../utils/axiosInstance';
 import Notification from '../utils/Notfication';
 
@@ -11,6 +11,7 @@ const SingleProductPage = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const { slug } = useParams();
   const product_id = SingleproductDetail.id;
+  const toast = useToast()
 
   useEffect(() => {
     const fetchData = async () => {
@@ -40,7 +41,19 @@ const SingleProductPage = () => {
         }
       });
     } catch (error) {
-      console.log(error);
+     if(error.request.status===401){ 
+      toast({
+        title: `Please login to continue`,
+        description: "Please login to proceed cart or signup",
+        status: 'warning',
+        position:'top-right',
+        duration: 5000,
+        isClosable: true,
+      })
+     }else{
+      console.log(error)
+     }
+
     }
   };
 
@@ -58,7 +71,7 @@ const SingleProductPage = () => {
         <Notification message={notification} />
         <Box display="flex" flexDirection={{ base: 'column', md: 'row' }}>
           <Box flex="1" maxW={{ base: 'md', md: 'md', lg: 'lg' }} h={'md'}   textAlign="center">
-            <Image src={productImage[currentImageIndex]?.image}  objectFit={'contain'} boxSize="100%" alt="" />
+          <Box w='500px' h={'500px'}>  <Image src={productImage[currentImageIndex]?.image}  objectFit={'contain'} boxSize="100%" alt="" /> </Box>
             <Button onClick={handlePrevClick} mt={2} mr={2}>
               Previous
             </Button>
@@ -67,8 +80,9 @@ const SingleProductPage = () => {
             </Button>
           </Box>
           <Box flex="1" ml={{ md: 4 }}>
-            <h2 style={{ fontSize: '2rem', marginBottom: '1rem' }}>{SingleproductDetail.name}</h2>
-            <p style={{ fontSize: '1rem', marginBottom: '1rem' }}>{SingleproductDetail.description}</p>
+            <Heading style={{ fontSize: '2rem', marginBottom: '1rem' }}>{SingleproductDetail.name}</Heading>
+        
+           
             <p style={{ fontSize: '1.5rem', fontWeight: 'bold', marginBottom: '1rem' }}>
               &#8377;{SingleproductDetail.price}
             </p>
@@ -78,6 +92,9 @@ const SingleProductPage = () => {
               </Button>
               <Button as={Link} to={'/cart/'}> Checkout Now</Button>
             </Box>
+            <Text mt={5}>
+            {SingleproductDetail.description}
+            </Text>
           </Box>
         </Box>
       </Box>

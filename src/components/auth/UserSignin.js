@@ -13,6 +13,7 @@ import {
   Heading,
   Text,
   useColorModeValue,
+  useToast,
 } from '@chakra-ui/react'
 import { Link as ChakraLink } from '@chakra-ui/react';
 
@@ -21,7 +22,7 @@ const UserSignin = () => {
     username: '',
     password: '',
   });
-
+  const toast = useToast()
   const handleChange = (e) => {
     const { name, value } = e.target;
     setUserLoginData({
@@ -39,11 +40,18 @@ const UserSignin = () => {
         localStorage.setItem('access_token', response.data.access);
         localStorage.setItem('refresh_token', response.data.refresh);
         window.location.href = '/';
-      } else {
-        throw new Error('Invalid login details'); // Throw an error for incorrect credentials
-      }
+      } 
     } catch (error) {
-      console.error(error.message); // Log the error message
+      if(error.request.status===401){
+        toast({
+          title: `Invalid username or password`,
+          description: "Please check your credential",
+          status: 'warning',
+          position:'top-right',
+          duration: 3000,
+          isClosable: true,
+        })
+      }
     }
   };
 

@@ -17,8 +17,10 @@ const HomePage = () => {
         setProductDetails(products.results || []);
         setNextPage(products.next !== null);
         setPreviousPage(products.previous !== null);
+        setIsLoading(false)
       } catch (error) {
         console.log(`error while fetch products ${error}`);
+        setIsLoading(false)
       }
     };
     fetchData();
@@ -36,18 +38,16 @@ const HomePage = () => {
     }
   };
 
-  if(isLoading){
-    <PageLoadingAnimation/>
-  }else{
-    setIsLoading(false)
-  }
+
 
   return (
-    <Box bg={'gray.100'} h={'100vh'}> 
+    isLoading? <PageLoadingAnimation/> : (<Box bg={'gray.100'} h={'100vh'}> 
     <Flex >
       {productDetails.map((product) => (
-        <Box flexDirection={'column'} mx={3} mt={'2'} display={'flex'} alignItems={'center'}  maxW='100px' h='auto' borderWidth={'1px'} borderColor={'teal.300'} key={product.id} className="product-card">
-          <Image mt={2} boxSize='50%' src={`http://localhost:8000/${product.first_image}`} alt="" />
+        <Box flexDirection={'column'} mx={3} mt={'2'} display={'flex'} alignItems={'center'} justifyContent={'space-between'}  w={'150px'} h='auto' borderWidth={'1px'} borderColor={'teal.300'} key={product.id} className="product-card">
+       <Box h={'40px'} w={'40px'}>
+        <Image objectFit={'contain'} mt={2} boxSize='100%' src={`http://localhost:8000/${product.first_image}`} alt="" />
+        </Box>   
           <Box className="title-container">
             <Text color={'blue.700'}> {product.name}</Text>
           </Box>
@@ -70,7 +70,8 @@ const HomePage = () => {
       </Box>
     </Flex>
 
-    </Box>
+    </Box>)
+    
   );
 };
 
