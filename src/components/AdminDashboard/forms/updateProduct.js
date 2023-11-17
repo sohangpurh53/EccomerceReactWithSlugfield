@@ -9,7 +9,7 @@ import {
   Button,
 } from '@chakra-ui/react';
 import Notification from '../../utils/Notfication';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const UpdateProductForm = () => {
   const { slug } = useParams();
@@ -25,6 +25,7 @@ const UpdateProductForm = () => {
     category: '',
     seller: '',
   });
+  const navigate = useNavigate()
 
   useEffect(() => {
     const fetchData = async () => {
@@ -77,7 +78,7 @@ const UpdateProductForm = () => {
               setNotification('');
             }, 2000);
             setTimeout(() => {
-              window.location.href = '/products/';
+              navigate('/admin/dashboard/')
             }, 2000);
           } else {
             setNotification('Error while updating product');

@@ -3,12 +3,7 @@ import axiosInstance from '../utils/axiosInstance';
 import { Link } from 'react-router-dom';
 import {
   Box,
-  Table,
-  Thead,
-  Tbody,
-  Tr,
-  Th,
-  Td,
+ Stack,
   Button,
 } from "@chakra-ui/react";
 
@@ -24,58 +19,47 @@ const ListProducts = () => {
   }, []);
 
   return (
-    <Box className="products-table-container">
-      {/* <div className="table-wrapper">
-        <div className="data-table"> */}
-          <Table variant="simple">
-            <Thead>
-              <Tr>
-                <Th>Index</Th>
-                <Th>Name</Th>
-                <Th>Description</Th>
-                <Th>Price</Th>
-                <Th>Shipping Fee</Th>
-                <Th>Stock</Th>
-                <Th>Actions</Th>
-              </Tr>
-            </Thead>
-            <Tbody>
-              {productDetails.map((product, index) => (
-                <Tr key={product.id}>
-                  <Td>{index + 1}</Td>
-                  <Td>{product.name}</Td>
-                  <Td>{product.description}</Td>
-                  <Td>{product.price}</Td>
-                  <Td>{product.shipping_fee}</Td>
-                  <Td>{product.stock}</Td>
-                  <Td>
-                    <Link to={`/product/update/${product.slug}`}>
-                      <Button colorScheme="teal" variant="outline">
-                        Update
-                      </Button>
-                    </Link>
-                  </Td>
-                  <Td>
-                    <Link to={`/product/delete/${product.slug}`}>
-                      <Button colorScheme="red" variant="outline">
-                        Delete
-                      </Button>
-                    </Link>
-                  </Td>
-                  <Td>
-                    <Link to={`/product/images/${product.slug}`}>
-                      <Button colorScheme="blue" variant="outline">
-                        Images
-                      </Button>
-                    </Link>
-                  </Td>
-                </Tr>
-              ))}
-            </Tbody>
-          </Table>
-        {/* </div>
-      </div> */}
-    </Box>
+    <Box >
+    {productDetails.map((product, index) => (
+      <Stack key={product.id} direction={{ base: 'column', md: 'row' }} spacing="2" borderBottom="1px solid #ccc" p="2">
+        <Box flex="1">
+          <strong>Index:</strong> {index + 1}
+        </Box>
+        <Box flex="2">
+          <strong>Name:</strong> {product.name}
+        </Box>
+        <Box flex="2">
+          <strong>Description:</strong> {product.description}
+        </Box>
+        <Box display={{ base: 'none', md: 'block' }} flex="1">
+          <strong>Price:</strong> {product.price}
+        </Box>
+        <Box display={{ base: 'none', md: 'block' }} flex="1">
+          <strong>Shipping Fee:</strong> {product.shipping_fee}
+        </Box>
+        <Box display={{ base: 'none', lg: 'block' }} flex="1">
+          <strong>Stock:</strong> {product.stock}
+        </Box>
+        <Stack direction="row" flex="3" spacing="2" justify="flex-end">
+          <Link to={`/product/update/${product.slug}`}>
+            <Button colorScheme="teal" variant="outline" size="sm">
+              Update
+            </Button>
+          </Link>
+          <Link to={`/product/delete/${product.slug}`}>
+            <Button colorScheme="red" variant="outline" size="sm">
+              Delete
+            </Button>
+          </Link>
+          <Link to={`/product/images/${product.slug}`}>
+            <Button colorScheme="blue" variant="outline" size="sm">
+              Images
+            </Button>
+          </Link>
+        </Stack>
+      </Stack>
+    ))}
+  </Box>
   )
 }
 

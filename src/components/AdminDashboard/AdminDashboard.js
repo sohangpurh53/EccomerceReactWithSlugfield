@@ -65,7 +65,7 @@ const AdminDashboard = () => {
           width={isOpen ? { base: '100%', md: '20%' } : '0'}
           p="4"
           transition="width 0.3s ease"
-          overflow="hidden"
+          // overflow="hidden"
           visibility={isOpen ? 'visible' : 'hidden'}
           
         >

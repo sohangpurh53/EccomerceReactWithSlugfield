@@ -39,7 +39,6 @@ const UserProfile = () => {
       window.location.href = '/signin';
     }
   }, [accessToken]);
-console.log(userOrderDetails)
  
   return (
     <Box maxW="800px" mx="auto" p={4}>
