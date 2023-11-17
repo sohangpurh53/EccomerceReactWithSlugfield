@@ -103,7 +103,7 @@ const Cart = () => {
 
              
             </Box>
-            <Text>Description: {item.product.description}</Text>
+            {/* <Text>Description: {item.product.description}</Text> */}
             <Text>Price: ₹{item.product.price}</Text>
             <Text>Quantity: {item.quantity}</Text>
             <Flex justify="space-between" mt="2">

@@ -46,10 +46,10 @@ const AdminDashboard = () => {
       <Box
         display="flex"
         flexDirection={{ base: 'column', md: 'row' }}
-        height="100vh"
+       
       >
 
-        <HStack p="4" bg="gray.700" color="white" w={{ base: '100%', md: '7.5%', lg:'5%' }}>
+        <HStack p="4"  minH={{ base: 'auto', lg: '100vh' }} bg="gray.700" color="white" w={{ base: '100%', md: '7.5%', lg:'5%' }}>
           <IconButton
             icon={isOpen ? <CloseIcon />: <BiSidebar />}
             onClick={onToggle}
