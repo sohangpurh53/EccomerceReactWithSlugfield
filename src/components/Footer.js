@@ -24,7 +24,7 @@ const SocialButton = ({ children, label, href }) => {
     <chakra.button
       bg={useColorModeValue('blackAlpha.100', 'whiteAlpha.100')}
       rounded={'full'}
-      target='_blank'
+      // target='_blank'
       w={8}
       h={8}
       cursor={'pointer'}
@@ -54,7 +54,7 @@ const ListHeader = ({ children }) => {
 
 function Footer() {
   const handleMailButtonClick = () => {
-    window.location.href = 'mailto:sales@rajengg.co.in';
+    window.location.href = 'mailto:example@co.in';
   };
   return (
     <Box
@@ -73,14 +73,14 @@ function Footer() {
             <Text fontSize={'sm'}>© 2023 Eccomerce. All rights reserved</Text>
             <Stack direction={'row'} spacing={6}>
               
-              <SocialButton label={'Whatsapp'} href={'https://whatsapp.com/channel/0029Va5Dzkw9sBIHtVNaHY44'}>
+              <SocialButton label={'Whatsapp'} href={'#'}>
                 <FaWhatsapp />
               </SocialButton>
               
-              <SocialButton label={'Facebook'}  href={'https://www.facebook.com/rajengineering72'}>
+              <SocialButton label={'Facebook'}  href={'#'}>
                 <FaFacebook />
               </SocialButton>
-              <SocialButton label={'Instagram'}  href={'https://www.instagram.com/rajengineering__/'}>
+              <SocialButton label={'Instagram'}  href={'#'}>
                 <FaInstagram />
               </SocialButton>
             </Stack>

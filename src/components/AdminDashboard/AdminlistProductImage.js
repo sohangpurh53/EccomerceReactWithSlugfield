@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import axiosInstance from '../utils/axiosInstance';
-// import '../css/categories.css'
+import { Box, Stack, Image,  Button } from '@chakra-ui/react';
 import {Link,  useParams } from 'react-router-dom';
 
 const ProductImageList = () => {
@@ -19,36 +19,25 @@ const ProductImageList = () => {
     },[slug])
     console.log(ProductDetails)
   return (
-    <div>
-        <div className="categories-table-container">
-        <div className="table-wrapper"> 
-            <div className="data-table">
-            <table> 
-                <thead>
-                    <tr>
-                     <th>Index</th>
-                    <th>Product Image</th>
-                    </tr>
-                    
-            </thead>
-            {ProductDetails.map((product, index)=>(
-                 <tbody key={product.id}>
-                    <tr>
-                    <td> {index + 1} </td>
-                    <td>  <img src={product.image} alt="" />  </td>
-        
-                    <td><Link to={`/product/images/delete/${product.id}/`}>Delete</Link></td>
-                    </tr>
-                </tbody>
-            ))}
-            </table>
-
-             </div>
-            </div>
-           </div>
-
-
-    </div>
+    <Box maxW="50%" mx="auto">
+    {ProductDetails.map((product, index) => (
+      <Stack key={product.id} direction="row" spacing="2" borderBottom="1px solid #ccc" p="2">
+        <Box flex="1">
+          <strong>Index:</strong> {index + 1}
+        </Box>
+        <Box flex="2">
+          <strong>Product Image:</strong> <Image src={product.image} alt="" />
+        </Box>
+        <Stack direction="row" flex="3" spacing="2" justify="flex-end">
+          <Link to={`/product/images/delete/${product.id}/`} >
+            <Button colorScheme="red" variant="outline" size="sm">
+              Delete
+            </Button>
+          </Link>
+        </Stack>
+      </Stack>
+    ))}
+  </Box>
   )
 }
 
