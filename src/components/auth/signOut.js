@@ -1,8 +1,9 @@
 import  { useEffect } from "react";
 import axiosInstance from "../utils/axiosInstance";
+import { useNavigate } from "react-router-dom";
 
 function SignOutComponent() {
-    
+    const Navigate = useNavigate()
     useEffect(() => {
         const handleSignOut = async () => {
             const refresh_token = localStorage.getItem('refresh_token');
@@ -12,7 +13,7 @@ function SignOutComponent() {
                 if (response.status === 200) {
                     localStorage.removeItem('access_token');
                     localStorage.removeItem('refresh_token');
-                    window.location.href = '/signin';
+                    Navigate('/signin');
                 } else {
                     console.log('something went wrong');
                 }
@@ -22,7 +23,7 @@ function SignOutComponent() {
         };
 
         handleSignOut();
-    }, []);
+    }, [Navigate]);
 
     return null;
 }

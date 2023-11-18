@@ -52,7 +52,7 @@ const HomePage = () => {
             <Text color={'blue.700'}> {product.name}</Text>
           </Box>
           <Text  color={'blue.700'} fontSize={'sm'} className="price">&#8377;{product.price}</Text>
-       <Button mb={2} width={'50%'} colorScheme='teal'> <Link to={`/product/${product.slug}/`}>View</Link></Button>  
+       <Button mb={2} width={'50%'} colorScheme='teal' as={Link} to={`/product/${product.slug}/`}>View</Button>  
         </Box>
       ))}
       <Box className="pagination" mt={4} display="flex" alignItems="center" justifyContent="center">

@@ -10,12 +10,14 @@ import {
   Badge,
   Image,
 } from '@chakra-ui/react';
+import { useNavigate } from 'react-router-dom';
 
 const UserProfile = () => {
   const [userDetails, setUserDetails] = useState([]);
   const [userAddress, setUserAddress] = useState([]);
   const[userOrderDetails, setUserOrderDetails] = useState([])
   const { accessToken } = useAuth();
+  const Navigate = useNavigate()
 
   useEffect(() => {
     if (accessToken) {
@@ -36,9 +38,9 @@ const UserProfile = () => {
       };
       fetchData();
     } else {
-      window.location.href = '/signin';
+      Navigate('/signin');
     }
-  }, [accessToken]);
+  }, [accessToken, Navigate]);
  
   return (
     <Box maxW="800px" mx="auto" p={4}>

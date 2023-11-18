@@ -53,9 +53,7 @@ const ListHeader = ({ children }) => {
 }
 
 function Footer() {
-  const handleMailButtonClick = () => {
-    window.location.href = 'mailto:example@co.in';
-  };
+
   return (
     <Box
       bg={useColorModeValue('gray.50', 'gray.900')}
@@ -88,14 +86,14 @@ function Footer() {
           <Stack align={'flex-start'}>
             <ListHeader>Eccomerce</ListHeader>
             <Box>
-             <Link to={'about-us/'}> About us</Link>
+             <Link to={'#'}> About us</Link>
             </Box>
             <Box >
               <Link to={'#'}> Blog</Link>
             
             </Box>
             <Box >
-            <Link to={'contact-us/'}>Contact us</Link>   
+            <Link to={'#'}>Contact us</Link>   
             </Box>
             <Box >
             <Link to={'#'}>Pricing</Link> 
@@ -107,7 +105,7 @@ function Footer() {
           <Stack align={'flex-start'}>
             <ListHeader>Support</ListHeader>
             <Box >
-            <Link to={'contact-us/'}>Help Center</Link> 
+            <Link to={'#'}>Help Center</Link> 
             </Box>
             <Box >
             <Link to={'#'}> Terms of Service</Link>
@@ -139,7 +137,7 @@ function Footer() {
                 _hover={{
                   bg: 'green.600',
                 }}
-               onClick={handleMailButtonClick}
+             
                 aria-label="Subscribe"
                 icon={<BiMailSend />}
               />

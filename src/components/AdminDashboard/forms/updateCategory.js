@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import axiosInstance from '../../utils/axiosInstance';
 import Notification from '../../utils/Notfication';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Box, Input, Button } from '@chakra-ui/react';
 
 const UpdateCategoryForm = () => {
   const { slug } = useParams();
-
+  const Navigate = useNavigate()
   const [notification, setNotification] = useState('');
   const [categoryData, setCategoryData] = useState({
     name: '',
@@ -45,7 +45,7 @@ const UpdateCategoryForm = () => {
             setNotification('');
           }, 1500);
           setTimeout(() => {
-            window.location.href = '/categories/';
+            Navigate('/categories/');
           }, 2000);
         } else {
           console.log('Error while updating category');

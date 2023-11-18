@@ -12,8 +12,12 @@ const ListProducts = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const product = await axiosInstance('list/product/').then(response => response.data);
+      try {
+        const product = await axiosInstance('list/product/').then(response => response.data);
       setProductDetails(product);
+      } catch (error) {
+        console.log(`error while fetch product ${error.message}`)
+      }
     }
     fetchData();
   }, []);

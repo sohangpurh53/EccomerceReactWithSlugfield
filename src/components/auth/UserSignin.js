@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axiosInstance from '../utils/axiosInstance';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import {
   Flex,
   Box,
@@ -23,6 +23,11 @@ const UserSignin = () => {
     password: '',
   });
   const toast = useToast()
+  const Navigate = useNavigate()
+
+
+
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setUserLoginData({
@@ -39,7 +44,7 @@ const UserSignin = () => {
       if (response.status === 200) {
         localStorage.setItem('access_token', response.data.access);
         localStorage.setItem('refresh_token', response.data.refresh);
-        window.location.href = '/';
+        Navigate('/');
       } 
     } catch (error) {
       if(error.request.status===401){

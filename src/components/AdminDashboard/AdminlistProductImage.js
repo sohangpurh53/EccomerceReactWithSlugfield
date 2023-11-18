@@ -23,10 +23,10 @@ const ProductImageList = () => {
     {ProductDetails.map((product, index) => (
       <Stack key={product.id} direction="row" spacing="2" borderBottom="1px solid #ccc" p="2">
         <Box flex="1">
-          <strong>Index:</strong> {index + 1}
+          <strong>Product:</strong> {product.product.name}
         </Box>
-        <Box flex="2">
-          <strong>Product Image:</strong> <Image src={product.image} alt="" />
+        <Box  flex="2">
+          <strong>Image:{index+1}</strong> <Image src={product.image} alt="" />
         </Box>
         <Stack direction="row" flex="3" spacing="2" justify="flex-end">
           <Link to={`/product/images/delete/${product.id}/`} >

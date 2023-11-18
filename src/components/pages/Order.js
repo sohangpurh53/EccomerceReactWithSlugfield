@@ -5,6 +5,7 @@ import {
   Box,
   Button,
   FormControl,
+  Image,
   FormLabel,
   Select,
   HStack,
@@ -116,6 +117,7 @@ function PlaceOrder() {
         console.error('Error placing order:', error);
       });
   };
+  console.log(orderDetails)
 
   if (orderPlaced) {
     <Notification message='Order Places successfully' />
@@ -129,6 +131,9 @@ function PlaceOrder() {
           {orderDetails.map(order=>(  
     <Box key={order.id} borderWidth="1px" borderRadius="lg" p="4" m="4">
         <VStack spacing="4" align="start">
+          <Box w={'75px'} maxW={{base:'md', md:'md', lg:'lg'}} >
+            <Image boxSize={'100%'} src={`http://127.0.0.1:8000${order.product.first_image}`} />
+          </Box>
           <Text fontWeight="bold">{order.product.name}</Text>
           <HStack>
             <Text>Quantity: {order.quantity}</Text>

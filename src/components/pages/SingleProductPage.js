@@ -3,6 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 import { Box,Heading,Text, Button, Image, useToast } from '@chakra-ui/react';
 import axiosInstance from '../utils/axiosInstance';
 import Notification from '../utils/Notfication';
+import PageLoadingAnimation from '../utils/LoadingAnimation';
 
 const SingleProductPage = () => {
   const [notification, setNotification] = useState('');
@@ -12,6 +13,7 @@ const SingleProductPage = () => {
   const { slug } = useParams();
   const product_id = SingleproductDetail.id;
   const toast = useToast()
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -20,8 +22,10 @@ const SingleProductPage = () => {
         const image = await axiosInstance(`products/images/${slug}/`).then((response) => response.data);
         setProductImage(image);
         setSingleProductDetail(product);
+        setIsLoading(false)
       } catch (error) {
         console.log(`error while fetch products ${error}`);
+        setIsLoading(false)
       }
     };
     fetchData();
@@ -57,6 +61,11 @@ const SingleProductPage = () => {
     }
   };
 
+  if (isLoading) {
+    return <PageLoadingAnimation />
+  }
+
+
   function handlePrevClick() {
     setCurrentImageIndex((prevIndex) => (prevIndex === 0 ? productImage.length - 1 : prevIndex - 1));
   }
@@ -71,7 +80,18 @@ const SingleProductPage = () => {
         <Notification message={notification} />
         <Box display="flex" flexDirection={{ base: 'column', md: 'row' }}>
           <Box flex="1" maxW={{ base: 'md', md: 'md', lg: 'lg' }} h={'md'}   textAlign="center">
-          <Box w='500px' h={'500px'}>  <Image src={productImage[currentImageIndex]?.image}  objectFit={'contain'} boxSize="100%" alt="" /> </Box>
+          <Box
+      maxW={['100%', '100%', '500px']} // Adjust width for different screen sizes
+      h={['auto', 'auto', '500px']} // Adjust height for different screen sizes
+    >
+      <Image
+        src={productImage[currentImageIndex]?.image}
+        objectFit="contain"
+        w="100%"
+        h="100%"
+        alt=""
+      />
+    </Box>
             <Button onClick={handlePrevClick} mt={2} mr={2}>
               Previous
             </Button>
