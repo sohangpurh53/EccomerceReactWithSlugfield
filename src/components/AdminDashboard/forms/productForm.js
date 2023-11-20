@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import axiosInstance from '../../utils/axiosInstance';
 import Notfication from '../../utils/Notfication';
-import { Box, Input, Button, Select, FormControl, FormLabel } from '@chakra-ui/react';
+import { Box, Input, Button, Select, FormControl, useToast, FormLabel } from '@chakra-ui/react';
 
 const ProductForm = () => {
   const [notification, setNotification] = useState('');
   const [categoryOption, setCategoryOption] = useState([]);
   const [sellerOption, setSellerOption] = useState([]);
+  const toast = useToast();
   const [productData, setProductData] = useState({
     name: '',
     description: '',
@@ -52,17 +53,31 @@ const ProductForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const form = new FormData();
-    Object.keys(productData).forEach((key) => {
-      if (key === 'uploaded_images') {
-        productData[key].forEach((file) => {
-          form.append('uploaded_images', file);
-        });
-      } else {
-        form.append(key, productData[key]);
-      }
-    });
+    const requiredFields = ['name', 'description', 'uploaded_images', 'seller','category', 'stock', 'shipping_fee']; // Add required field names
+  const isAnyFieldEmpty = requiredFields.some((field) => !productData[field]);
 
+  if (isAnyFieldEmpty) {
+    toast({
+      title: 'All field Neccessary Required',
+      description: 'Please fill in all required fields.',
+      status: 'warning',
+      position:'top-right',
+      duration: 3000,
+      isClosable: true,
+    });
+    return; // Prevent form submission
+  }
+
+  const form = new FormData();
+  Object.keys(productData).forEach((key) => {
+    if (key === 'uploaded_images') {
+      productData[key].forEach((file) => {
+        form.append('uploaded_images', file);
+      });
+    } else {
+      form.append(key, productData[key]);
+    }
+  });
     try {
       await axiosInstance.post('create/product/', form, {
         headers: {
@@ -111,6 +126,7 @@ const ProductForm = () => {
             accept="image/*"
             multiple
             onChange={handleImageUpload}
+            required
           />
         </FormControl>
         <FormControl mb={4}>
