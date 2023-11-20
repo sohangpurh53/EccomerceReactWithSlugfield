@@ -23,7 +23,7 @@ const UserSignin = () => {
     password: '',
   });
   const toast = useToast()
-  const Navigate = useNavigate()
+  const navigate = useNavigate()
 
 
 
@@ -44,8 +44,9 @@ const UserSignin = () => {
       if (response.status === 200) {
         localStorage.setItem('access_token', response.data.access);
         localStorage.setItem('refresh_token', response.data.refresh);
-        Navigate('/');
-      } 
+       
+         navigate('/');
+      } navigate(0)
     } catch (error) {
       if(error.request.status===401){
         toast({

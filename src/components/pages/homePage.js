@@ -41,21 +41,49 @@ const HomePage = () => {
 
 
   return (
-    isLoading? <PageLoadingAnimation/> : (<Box bg={'gray.100'} h={'100vh'}> 
-    <Flex >
+    isLoading? <PageLoadingAnimation/> : (<Box bg={'gray.100'} minH={'100vh'} p={4}>
+    <Flex direction={['column', 'row']} flexWrap={'wrap'} justify={'center'}>
       {productDetails.map((product) => (
-        <Box flexDirection={'column'} mx={3} mt={'2'} display={'flex'} alignItems={'center'} justifyContent={'space-between'}  w={'150px'} h='auto' borderWidth={'1px'} borderColor={'teal.300'} key={product.id} className="product-card">
-       <Box h={'40px'} w={'40px'}>
-        <Image objectFit={'contain'} mt={2} boxSize='100%' src={`http://localhost:8000/${product.first_image}`} alt="" />
-        </Box>   
-          <Box className="title-container">
-            <Text color={'blue.700'}> {product.name}</Text>
+        <Box
+          key={product.id}
+          w={['100%', 'calc(50% - 20px)', 'calc(33.33% - 20px)', 'calc(25% - 20px)']}
+          mx={2}
+          my={4}
+          borderWidth={'1px'}
+          borderColor={'teal.300'}
+          borderRadius={'md'}
+          p={2}
+          textAlign={'center'}
+        >
+          <Box h={'40px'} w={'40px'} mx={'auto'}>
+            <Image
+              objectFit={'contain'}
+              mt={2}
+              boxSize='100%'
+              src={`http://localhost:8000/${product.first_image}`}
+              alt=""
+            />
           </Box>
-          <Text  color={'blue.700'} fontSize={'sm'} className="price">&#8377;{product.price}</Text>
-       <Button mb={2} width={'50%'} colorScheme='teal' as={Link} to={`/product/${product.slug}/`}>View</Button>  
+          <Box mt={2} className="title-container">
+            <Text fontSize={['sm', 'md']} color={'blue.700'}>
+              {product.name}
+            </Text>
+          </Box>
+          <Text color={'blue.700'} fontSize={'sm'} mt={1} className="price">
+            &#8377;{product.price}
+          </Text>
+          <Button
+            mt={2}
+            width={['100%', '50%', '45%', '40%']}
+            colorScheme='teal'
+            as={Link}
+            to={`/product/${product.slug}/`}
+          >
+            View
+          </Button>
         </Box>
       ))}
-      <Box className="pagination" mt={4} display="flex" alignItems="center" justifyContent="center">
+      <Box mt={4} w={'100%'} display="flex" alignItems="center" justifyContent="center">
         {previousPage && (
           <Button onClick={previousPageButton} colorScheme="teal" mr={2}>
             Previous
@@ -69,8 +97,7 @@ const HomePage = () => {
         )}
       </Box>
     </Flex>
-
-    </Box>)
+  </Box>)
     
   );
 };

@@ -13,10 +13,12 @@ function SignOutComponent() {
                 if (response.status === 200) {
                     localStorage.removeItem('access_token');
                     localStorage.removeItem('refresh_token');
+                    
                     Navigate('/signin');
                 } else {
                     console.log('something went wrong');
                 }
+                Navigate(0)
             } catch (error) {
                 console.error(error);
             }

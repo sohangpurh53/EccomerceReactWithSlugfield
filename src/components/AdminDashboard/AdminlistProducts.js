@@ -3,6 +3,7 @@ import axiosInstance from '../utils/axiosInstance';
 import { Link } from 'react-router-dom';
 import {
   Box,
+  Image,
  Stack,
   Button,
 } from "@chakra-ui/react";
@@ -13,7 +14,7 @@ const ListProducts = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const product = await axiosInstance('list/product/').then(response => response.data);
+        const product = await axiosInstance('admin/list/product/').then(response => response.data);
       setProductDetails(product);
       } catch (error) {
         console.log(`error while fetch product ${error.message}`)
@@ -21,11 +22,15 @@ const ListProducts = () => {
     }
     fetchData();
   }, []);
+  console.log(productDetails)
 
   return (
     <Box >
     {productDetails.map((product, index) => (
       <Stack key={product.id} direction={{ base: 'column', md: 'row' }} spacing="2" borderBottom="1px solid #ccc" p="2">
+        <Box w={'200px'} h={'200px'} maxW={{base:'md', md:'md', lg:'lg'}}>
+          <Image objectFit={'contain'} boxSize={'100%'} src={`http://127.0.0.1:8000${product.first_image}`} />
+        </Box>
         <Box flex="1">
           <strong>Index:</strong> {index + 1}
         </Box>

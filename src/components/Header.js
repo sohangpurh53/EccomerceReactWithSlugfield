@@ -17,12 +17,21 @@ const Header = () => {
   const [searchResults, setSearchResults] = useState(null);
   const inputRef = useRef()
 
+  
   useEffect(() => {
-    if (accessToken) {
+    const checkStatus = ()=>{
+      try {
+       if (accessToken) {
       setAuthenticated(true);
     } else {
       setAuthenticated(false);
     }
+    } catch (error) {
+      
+    }
+    }
+    checkStatus()
+  
   }, [accessToken]);
 
 
@@ -125,13 +134,9 @@ const handleKeyPress = (event) => {
         </Flex>
 
         {authenticated ? (
-          <ChakraLink as={Link} to="/signout">
-            Sign Out
-          </ChakraLink>
+          <Button as={Link} to={"/signout"}>SignOut</Button>
         ) : (
-          <ChakraLink as={Link} to="/signin">
-            Sign In
-          </ChakraLink>
+          <Button as={Link} to="/signin">Sign In</Button>
         )}
       </Flex>
       <Box>
@@ -141,9 +146,9 @@ const handleKeyPress = (event) => {
           {searchResults.map(result => (
             <Box key={result.id} m="2" p="2" borderWidth="1px" borderRadius="md">
               <Box h={'50px'} w={'50px'} >
-                <Image boxSize={'100%'}  src={`http://127.0.0.1:8000${result.first_image}`} alt='result.name'/>
+                <Image boxSize={'100%'} objectFit={'contain'}  src={`http://127.0.0.1:8000${result.first_image}`} alt='result.name'/>
               </Box>
-              <Text color={'black'} fontWeight="bold" fontSize="md">{result.name}</Text>
+              <Text color={'gray.500'} fontWeight={'bold'} fontSize="md">{result.name}</Text>
               <Button size="sm" onClick={() => setSearchResults(null)}  as={Link} to={`/product/${result.slug}/`}>View Product</Button>
             </Box>
           ))}
