@@ -55,12 +55,12 @@ const Cart = () => {
   const removeCartItem = async (e, cart_item_id) => {
     e.preventDefault()
     try {
-      await axiosInstance.delete(`remove_cart_item/${cart_item_id}/`).then(
-        usenavigation(0)
-      );
+      await axiosInstance.delete(`remove_cart_item/${cart_item_id}/`);
+      
     } catch (error) {
       console.log(error)
     }
+     usenavigation(0)
   }
 
   const reduceCartItem = async (e, cart_item_id) => {
@@ -85,15 +85,13 @@ const Cart = () => {
   }, [])
 
   return (
-    <Flex className="cart-container"  justifyContent={'space-around'}>
+    <Flex className="cart-container"  justifyContent={'space-around'}  wrap={'wrap'}>
       <Notification message={notification} />
-
-      <Heading as="h1" mb="4">Cart</Heading>
-
-      <Flex direction="column" justifyContent={'center'} alignItems={'center'}>
+      <Flex direction="column" justifyContent={'flex-start'} alignItems={'center'}>
+      <Text mx={'auto'} fontSize={'1.5rem'} fontWeight={'bold'}>Cart</Text>
         {cart_items.length > 0 ? (cart_items.map(item => (
-          <Box className="cart-item" key={item.id} mb="4">
-            <Heading as="h3" size="md">Item name: {item.product.name}</Heading>
+          <Box width={'200px'} maxW={{base:'md', md:'md', lg:'lg'}} className="cart-item" key={item.id} mb="4">
+            <Heading as="h3" size="sm">Item name: {item.product.name}</Heading>
             <Box h='50px' w='50px'>
               <Image
               src={`http://127.0.0.1:8000${item.product.first_image}`}
@@ -125,6 +123,7 @@ const Cart = () => {
       </Flex>
 
       {cart_items.length > 0 ? (
+        <Flex direction={{base:'column', md:'column', lg:'row'}} >
         <Box className="order-summary" mt="4" >
           <Heading as="h2" size="md" mb="2">Order Summary</Heading>
           <Flex justify="space-between" mb="2">
@@ -143,6 +142,7 @@ const Cart = () => {
             <Button colorScheme="teal">Proceed to Checkout</Button>
           </Link>
         </Box>
+        </Flex>
       ) : ('')}
     </Flex>
   );

@@ -48,11 +48,11 @@ const UserSignin = () => {
         localStorage.setItem('access_token', response.data.access);
         localStorage.setItem('refresh_token', response.data.refresh);
         Navigate('/');
-        window.location.reload();
+        
       } else {
         // Handle other status codes
         console.error('Unexpected response status:', response.status);
-      }
+      }Navigate(0)
     } catch (error) {
       if (error.response && error.response.status === 401) {
         const responseData = error.response.data;

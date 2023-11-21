@@ -42,11 +42,13 @@ const HomePage = () => {
 
   return (
     isLoading? <PageLoadingAnimation/> : (<Box bg={'gray.100'} minH={'100vh'} p={4}>
-    <Flex direction={['column', 'row']} flexWrap={'wrap'} justify={'center'}>
+    <Flex direction={['column', 'row']} flexWrap={'wrap'} alignItems={'center'}  justify={'flex-start'}>
       {productDetails.map((product) => (
         <Box
           key={product.id}
-          w={['100%', 'calc(50% - 20px)', 'calc(33.33% - 20px)', 'calc(25% - 20px)']}
+          w={'200px'}
+          h={'180px'}
+         maxW={{base:'md',md:'md' , lg:'lg' }} 
           mx={2}
           my={4}
           borderWidth={'1px'}
@@ -65,8 +67,8 @@ const HomePage = () => {
             />
           </Box>
           <Box mt={2} className="title-container">
-            <Text fontSize={['sm', 'md']} color={'blue.700'}>
-              {product.name}
+            <Text fontSize={'14px'} color={'blue.700'}>
+            {product.name.length > 30 ? `${product.name.substring(0, 20)}...` : product.name}
             </Text>
           </Box>
           <Text color={'blue.700'} fontSize={'sm'} mt={1} className="price">

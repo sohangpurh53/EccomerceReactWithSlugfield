@@ -27,7 +27,8 @@ import { SearchIcon, HamburgerIcon } from '@chakra-ui/icons';
 import { Link as RouterLink} from 'react-router-dom';
 import axiosInstance from './utils/axiosInstance'
 import { FaHome } from "react-icons/fa";
-
+import { useAuth } from './context/Authcontext';
+import { CiShoppingCart } from "react-icons/ci";
 
 const Header = () => {
   const [isSmallerThanMd] = useMediaQuery("(max-width: 48em)");
@@ -35,6 +36,7 @@ const Header = () => {
   const [searchValue, setSearchValue] = useState('');
   const [searchResults, setSearchResults] = useState(null);
   const inputRef = useRef();
+  const {accessToken} = useAuth()
 
   const handleInputChange = (event) => {
     setSearchValue(event.target.value);
@@ -43,15 +45,20 @@ const Header = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSearchResults(null);
+  
+    if (searchValue.trim() === '') {
+      // console.log('Input is empty, cannot search.');
+      return; // Do not proceed with the API call if the input is empty
+    }
+  
     try {
-      const response = await axiosInstance(`product/?search=${searchValue}`);
-      const data = await response.data;
+      const response = await axiosInstance.get(`product/?search=${searchValue}`);
+      const data = response.data;
       setSearchResults(data);
     } catch (error) {
       console.error('Error fetching data:', error);
     }
-  }
-
+  };
   const handleKeyPress = (event) => {
     if (event.key === 'Enter' || event.keyCode === 13) {
       event.preventDefault()
@@ -87,7 +94,7 @@ const Header = () => {
         <Box mx={0}>
           <Link as={RouterLink} to="/">
             <Center>
-            <FaHome size={'33.33px'} />              
+            <FaHome   size={'33.33px'} />              
             </Center>
           </Link>
         </Box>
@@ -127,6 +134,8 @@ const Header = () => {
           </InputGroup>
          
         </Center>
+        
+        
 
         <Spacer />
 
@@ -150,6 +159,10 @@ const Header = () => {
                       <Button  variant="ghost" as={RouterLink} to="/about-us/" onClick={handleDrawerClose}>About Us</Button>
                       <Button variant="ghost" as={RouterLink} to="/contact-us/" onClick={handleDrawerClose}>Contact</Button>
                       <Button variant="ghost" as={RouterLink} to="/product/" onClick={handleDrawerClose}>Products</Button>
+
+                     {accessToken? <Button variant="ghost" as={RouterLink} to="/signout/" onClick={handleDrawerClose}>SignOut</Button>:
+                      <Button variant="ghost" as={RouterLink} to="/signin/" onClick={handleDrawerClose}>SignIn</Button>}
+
                     </Stack>
                   </DrawerBody>
                 </DrawerContent>
@@ -159,28 +172,41 @@ const Header = () => {
         ) : (
           <Stack direction="row" spacing={3}>
              {/* < DarkModeToggle/> */}
-            <Button variant="ghost" as={RouterLink} to="/about-us/">About Us</Button>
+            {/* <Button variant="ghost" as={RouterLink} to="/about-us/">About Us</Button>
             <Button variant="ghost" as={RouterLink} to="/contact-us/">Contact</Button>
-            <Button variant="ghost" as={RouterLink} to="/product/">Products</Button>
+            <Button variant="ghost" as={RouterLink} to="/product/">Products</Button> */}
+            <Button  variant="ghost" as={RouterLink} to="/cart/"><CiShoppingCart fontSize={'25px'}/> Cart </Button>
+           
+
+            {accessToken? <Button variant="ghost" as={RouterLink} to="/signout/" >SignOut</Button>:
+                      <Button variant="ghost" as={RouterLink} to="/signin/" >SignIn</Button>}
           </Stack>
         )}
       </Flex>
       <Box>
-      {searchResults && (
-        <Box maxW={'400px'} mt="4" mx={'auto'} p="4" bgColor="#fff" borderRadius="md" boxShadow="md">
-          <Text fontWeight="bold"  fontSize="lg">Search Results:</Text>
+  {searchResults !== null && (
+    <Box maxW={'400px'} mt="4" mx={'auto'} p="4" bgColor="#fff" borderRadius="md" boxShadow="md">
+      {searchResults && searchResults.length > 0 ? (
+        <>
+          <Text fontWeight="bold" fontSize="lg">Search Results:</Text>
           {searchResults.map(result => (
             <Box key={result.id} m="2" p="2" borderWidth="1px" borderRadius="md">
               <Text color={'black'} fontWeight="bold" fontSize="md">{result.name}</Text>
-              <Box h={'50px'} w={'50px'} >
-                <Image boxSize={'100%'} objectFit={'contain'}  src={`http://127.0.0.1:8000${result.first_image}`} alt='result.name'/>
+              <Box h={'50px'} w={'50px'}>
+                <Image boxSize={'100%'} objectFit={'contain'} src={`http://127.0.0.1:8000${result.first_image}`} alt={result.name} />
               </Box>
-              <Button size="sm" onClick={() => setSearchResults(null)}  as={RouterLink} to={`/product/${result.slug}/`}>View Product</Button>
+              <Button size="sm" onClick={() => setSearchResults(null)} as={RouterLink} to={`/product/${result.slug}/`}>View Product</Button>
             </Box>
           ))}
+        </>
+      ) : (
+        <Box mt="4" mx="auto" p="4" borderRadius="md" boxShadow="md" textAlign="center">
+          <Text color={'gray.600'}>No results found.</Text>
         </Box>
       )}
     </Box>
+  )}
+</Box>
     </Box>
   );
 };

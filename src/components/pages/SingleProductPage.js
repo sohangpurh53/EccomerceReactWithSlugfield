@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { Box,Heading,Text, Button, Image, useToast } from '@chakra-ui/react';
+import { Box,Text, Button, Image, useToast } from '@chakra-ui/react';
 import axiosInstance from '../utils/axiosInstance';
 import Notification from '../utils/Notfication';
 import PageLoadingAnimation from '../utils/LoadingAnimation';
@@ -78,17 +78,18 @@ const SingleProductPage = () => {
     <>
       <Box maxW="container.xl" mx="auto" p={4}>
         <Notification message={notification} />
-        <Box display="flex" flexDirection={{ base: 'column', md: 'row' }}>
-          <Box flex="1" maxW={{ base: 'md', md: 'md', lg: 'lg' }} h={'md'}   textAlign="center">
+        <Box>
+          <Box textAlign="center">
           <Box
-      maxW={['100%', '100%', '500px']} // Adjust width for different screen sizes
-      h={['auto', 'auto', '500px']} // Adjust height for different screen sizes
+      maxW={{base:'md', md:'md', lg:'lg'}} 
+       w="100%"
+        h="100%"
     >
       <Image
+      mx={'auto'}
         src={productImage[currentImageIndex]?.image}
         objectFit="contain"
-        w="100%"
-        h="100%"
+       
         alt=""
       />
     </Box>
@@ -100,7 +101,7 @@ const SingleProductPage = () => {
             </Button>
           </Box>
           <Box flex="1" ml={{ md: 4 }}>
-            <Heading style={{ fontSize: '2rem', marginBottom: '1rem' }}>{SingleproductDetail.name}</Heading>
+            <Text fontWeight={'bold'} fontSize={'16px'}>{SingleproductDetail.name}</Text>
         
            
             <p style={{ fontSize: '1.5rem', fontWeight: 'bold', marginBottom: '1rem' }}>
