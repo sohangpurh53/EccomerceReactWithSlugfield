@@ -7,7 +7,7 @@ import {
   FormControl,
   FormLabel,
   Input,
-  Checkbox,
+ 
   Stack,
   Button,
   Heading,
@@ -16,14 +16,16 @@ import {
   useToast,
 } from '@chakra-ui/react'
 import { Link as ChakraLink } from '@chakra-ui/react';
+import PageLoadingAnimation from '../utils/LoadingAnimation';
 
 const UserSignin = () => {
   const [userLoginData, setUserLoginData] = useState({
     username: '',
     password: '',
   });
+  const [isLoading, setIsLoading] = useState(false)
   const toast = useToast()
-  const navigate = useNavigate()
+  const Navigate = useNavigate()
 
 
 
@@ -38,28 +40,43 @@ const UserSignin = () => {
 
   const signInForm = async (e) => {
     e.preventDefault();
+    setIsLoading(false)
     try {
       const response = await axiosInstance.post('token/', userLoginData);
-
+  
       if (response.status === 200) {
         localStorage.setItem('access_token', response.data.access);
         localStorage.setItem('refresh_token', response.data.refresh);
-       
-         navigate('/');
-      } navigate(0)
-    } catch (error) {
-      if(error.request.status===401){
-        toast({
-          title: `Invalid username or password`,
-          description: "Please check your credential",
-          status: 'warning',
-          position:'top-right',
-          duration: 3000,
-          isClosable: true,
-        })
+        Navigate('/');
+        window.location.reload();
+      } else {
+        // Handle other status codes
+        console.error('Unexpected response status:', response.status);
       }
+    } catch (error) {
+      if (error.response && error.response.status === 401) {
+        const responseData = error.response.data;
+        if (responseData && responseData.code === 'token_not_valid') {
+          console.error('Token is invalid or expired.');
+          // Handle the token expiration, e.g., redirect to login page or show an error message
+        } else {
+          // console.error('Unauthorized access. Invalid login credentials.');
+          toast({
+        title: "Unauthorized access. Invalid login credentials.",
+        status: 'error',
+        position:'top',
+        duration: 3000,
+        isClosable: true,
+      });
+          // Handle unauthorized access, e.g., redirect to login page or show an error message
+        }
+      } else {
+        console.error('An error occurred:', error.message);
+      }
+      
     }
   };
+  const bgColor = useColorModeValue('gray.50', 'gray.800');
 
   return (
     // <Box className="auth-container" p={4} maxW="container.sm" mx="auto">
@@ -91,11 +108,11 @@ const UserSignin = () => {
     //   </form>
     //   <Link to={'/signup'}>Signup</Link>
     // </Box>
-    <Flex
+    isLoading? <PageLoadingAnimation/> :(<Flex
       minH={'100vh'}
       // align={'center'}
       justify={'center'}
-      bg={useColorModeValue('gray.50', 'gray.800')}>
+      bg={bgColor}>
       <Stack spacing={8} mx={'auto'} maxW={'lg'} py={12} px={6}>
         <Stack align={'center'}>
           <Heading fontSize={'4xl'}>Sign in to your account</Heading>
@@ -103,7 +120,7 @@ const UserSignin = () => {
         </Stack>
         <Box
           rounded={'lg'}
-          bg={useColorModeValue('white', 'gray.700')}
+          bg={bgColor}
           boxShadow={'lg'}
           p={8}>
           <Stack spacing={4}>
@@ -127,13 +144,13 @@ const UserSignin = () => {
              required  />
             </FormControl>
             <Stack spacing={10}>
-              <Stack
+              {/* <Stack
                 direction={{ base: 'column', sm: 'row' }}
                 align={'start'}
                 justify={'space-between'}>
                 <Checkbox>Remember me</Checkbox>
                 <Text color={'blue.400'}>Forgot password?</Text>
-              </Stack>
+              </Stack> */}
               <Button
                onClick={signInForm}
                 bg={'blue.400'}
@@ -152,7 +169,7 @@ const UserSignin = () => {
         
       </Stack>
     
-    </Flex>
+    </Flex>) 
   );
 };
 

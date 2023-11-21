@@ -1,45 +1,45 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
-import { Box, Text,
-   InputGroup, InputRightElement, Image,
-   IconButton,  Flex, Input,
-    Button, Link as ChakraLink } from '@chakra-ui/react';
-import { SearchIcon } from '@chakra-ui/icons';
-import { useAuth } from './context/Authcontext';
+import React, { useState, useRef, useEffect } from 'react';
+import {
+  Box,
+  Flex,
+  Spacer,
+  Input,
+  InputGroup,
+  Text,
+  Image,
+  InputRightElement,
+  IconButton,
+  useMediaQuery,
+  Drawer,
+  DrawerOverlay,
+  DrawerContent,
+  DrawerCloseButton,
+  DrawerHeader,
+  DrawerBody,
+  // useColorMode ,
+  Link,
+  Button,
+  // Switch,
+  Center,
+  Stack,
+} from '@chakra-ui/react';
+import { SearchIcon, HamburgerIcon } from '@chakra-ui/icons';
+import { Link as RouterLink} from 'react-router-dom';
 import axiosInstance from './utils/axiosInstance'
-
+import { FaHome } from "react-icons/fa";
 
 
 const Header = () => {
-  const { accessToken } = useAuth();
-  const [authenticated, setAuthenticated] = useState(false);
+  const [isSmallerThanMd] = useMediaQuery("(max-width: 48em)");
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [searchValue, setSearchValue] = useState('');
   const [searchResults, setSearchResults] = useState(null);
-  const inputRef = useRef()
+  const inputRef = useRef();
 
-  
-  useEffect(() => {
-    const checkStatus = ()=>{
-      try {
-       if (accessToken) {
-      setAuthenticated(true);
-    } else {
-      setAuthenticated(false);
-    }
-    } catch (error) {
-      
-    }
-    }
-    checkStatus()
-  
-  }, [accessToken]);
-
-
-
-  const handleSearchResults = (e)=>{
-    setSearchValue(e.target.value);
+  const handleInputChange = (event) => {
+    setSearchValue(event.target.value);
   }
- 
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSearchResults(null);
@@ -52,11 +52,19 @@ const Header = () => {
     }
   }
 
-const handleKeyPress = (event) => {
+  const handleKeyPress = (event) => {
     if (event.key === 'Enter' || event.keyCode === 13) {
       event.preventDefault()
       handleSubmit(event);
     }
+  }
+
+  const handleDrawerOpen = () => {
+    setIsDrawerOpen(true);
+  }
+
+  const handleDrawerClose = () => {
+    setIsDrawerOpen(false);
   }
 
   useEffect(() => {
@@ -74,34 +82,20 @@ const handleKeyPress = (event) => {
   }, []);
 
   return (
-   <Box as="header" bg="blue.100" p={4}>
-      <Flex justifyContent="space-between" alignItems="center" maxW="container.xl" mx="auto">
-        <ul style={{ listStyle: 'none', padding: 0 }}>
-          <li style={{ display: 'inline-block', marginRight: '1rem' }}>
-            <ChakraLink as={Link} to="/">
-              Home
-            </ChakraLink>
-          </li>
-          <li style={{ display: 'inline-block', marginRight: '1rem' }}>
-            <ChakraLink as={Link} to="/cart/">
-              Cart
-            </ChakraLink>
-          </li>
-          <li style={{ display: 'inline-block', marginRight: '1rem' }}>
-            <ChakraLink as={Link} to="/admin/dashboard/">
-              Admin-Dashboard
-            </ChakraLink>
-          </li>
-          <li style={{ display: 'inline-block', marginRight: '1rem' }}>
-            <ChakraLink as={Link} to="/user/profile/">
-              User-Profile
-            </ChakraLink>
-          </li>
-         
-        </ul>
+    <Box as="header" p="4" bgColor="blue.300" color="white">
+      <Flex alignItems="center">
+        <Box mx={0}>
+          <Link as={RouterLink} to="/">
+            <Center>
+            <FaHome size={'33.33px'} />              
+            </Center>
+          </Link>
+        </Box>
 
-        <Flex alignItems="center">
-        <InputGroup maxW="180px" mt={'10px'}>
+        <Spacer />
+
+        <Center>
+          <InputGroup maxW="180px" mt={'10px'}>
             <InputRightElement >
               <IconButton
                 bg={'white'}
@@ -126,39 +120,68 @@ const handleKeyPress = (event) => {
               borderColor="#fff"
               bg={'#fff'}
               value={searchValue}
-              onChange={handleSearchResults}
+              onChange={handleInputChange}
               onKeyDown={handleKeyPress}
               ref={inputRef}
             />
           </InputGroup>
-        </Flex>
+         
+        </Center>
 
-        {authenticated ? (
-          <Button as={Link} to={"/signout"}>SignOut</Button>
+        <Spacer />
+
+        {isSmallerThanMd ? (
+          <>
+            <IconButton
+              aria-label="Menu"
+              variant="ghost"
+              icon={<HamburgerIcon color="white" />}
+              size="lg"
+              onClick={handleDrawerOpen}
+            />
+            <Drawer placement="right" onClose={handleDrawerClose} isOpen={isDrawerOpen}>
+              <DrawerOverlay>
+                <DrawerContent>
+                  <DrawerCloseButton />
+                  <DrawerHeader>Menu</DrawerHeader>
+                  <DrawerBody>
+                    <Stack spacing={3}>
+                    
+                      <Button  variant="ghost" as={RouterLink} to="/about-us/" onClick={handleDrawerClose}>About Us</Button>
+                      <Button variant="ghost" as={RouterLink} to="/contact-us/" onClick={handleDrawerClose}>Contact</Button>
+                      <Button variant="ghost" as={RouterLink} to="/product/" onClick={handleDrawerClose}>Products</Button>
+                    </Stack>
+                  </DrawerBody>
+                </DrawerContent>
+              </DrawerOverlay>
+            </Drawer>
+          </>
         ) : (
-          <Button as={Link} to="/signin">Sign In</Button>
+          <Stack direction="row" spacing={3}>
+             {/* < DarkModeToggle/> */}
+            <Button variant="ghost" as={RouterLink} to="/about-us/">About Us</Button>
+            <Button variant="ghost" as={RouterLink} to="/contact-us/">Contact</Button>
+            <Button variant="ghost" as={RouterLink} to="/product/">Products</Button>
+          </Stack>
         )}
       </Flex>
       <Box>
-{searchResults && (
+      {searchResults && (
         <Box maxW={'400px'} mt="4" mx={'auto'} p="4" bgColor="#fff" borderRadius="md" boxShadow="md">
           <Text fontWeight="bold"  fontSize="lg">Search Results:</Text>
           {searchResults.map(result => (
             <Box key={result.id} m="2" p="2" borderWidth="1px" borderRadius="md">
+              <Text color={'black'} fontWeight="bold" fontSize="md">{result.name}</Text>
               <Box h={'50px'} w={'50px'} >
                 <Image boxSize={'100%'} objectFit={'contain'}  src={`http://127.0.0.1:8000${result.first_image}`} alt='result.name'/>
               </Box>
-              <Text color={'gray.500'} fontWeight={'bold'} fontSize="md">{result.name}</Text>
-              <Button size="sm" onClick={() => setSearchResults(null)}  as={Link} to={`/product/${result.slug}/`}>View Product</Button>
+              <Button size="sm" onClick={() => setSearchResults(null)}  as={RouterLink} to={`/product/${result.slug}/`}>View Product</Button>
             </Box>
           ))}
         </Box>
       )}
     </Box>
     </Box>
-   
-    
-   
   );
 };
 
