@@ -13,17 +13,21 @@ import Notification from '../utils/Notfication';
 import { useNavigate } from 'react-router-dom';
 import { AddIcon, MinusIcon} from '@chakra-ui/icons'
 import { BiCart } from 'react-icons/bi';
+import PageLoadingAnimation from '../utils/LoadingAnimation';
 
 const Cart = () => {
   const [cartDetails, setCartDetails] = useState({ cart_items: [] });
   const [notification, setNotification] = useState('')
   const usenavigation = useNavigate()
+  const [isLoading, setIsLoading] = useState(true)
+
 
   const fetchData = async () => {
     try {
       const cart = await axiosInstance('create/cart/').then(response => response.data);
       
       setCartDetails(cart);
+      setIsLoading(false)
     } catch (error) {
       console.log(error)
     }
@@ -41,6 +45,7 @@ const Cart = () => {
           setNotification('Item Added Successfully');
           setTimeout(() => { setNotification('') }, 2000)
           fetchData()
+         
 
         } else {
           console.log('Error occur while adding, something went wrong')
@@ -48,6 +53,7 @@ const Cart = () => {
       });
     } catch (error) {
       console.log(error)
+    
     }
 
   }
@@ -81,11 +87,12 @@ const Cart = () => {
 
   useEffect(() => {
     fetchData()
+   
 
   }, [])
 
   return (
-    <Flex className="cart-container"  justifyContent={'space-around'}  wrap={'wrap'}>
+   isLoading? <PageLoadingAnimation/> :(<Flex className="cart-container"  justifyContent={'space-around'}  wrap={'wrap'}>
       <Notification message={notification} />
       <Flex direction="column" justifyContent={'flex-start'} alignItems={'center'}>
       <Text mx={'auto'} fontSize={'1.5rem'} fontWeight={'bold'}>Cart</Text>
@@ -144,7 +151,7 @@ const Cart = () => {
         </Box>
         </Flex>
       ) : ('')}
-    </Flex>
+    </Flex>)
   );
 };
 

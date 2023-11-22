@@ -16,6 +16,7 @@ import {
 
 import Notification from '../utils/Notfication';
 import { Container } from 'reactstrap';
+import PageLoadingAnimation from '../utils/LoadingAnimation';
 
 
 function PlaceOrder() {
@@ -32,7 +33,8 @@ function PlaceOrder() {
   const [shippingAddresses, setShippingAddresses] = useState([]); // Track existing shipping addresses
   const [orderPlaced, setOrderPlaced] = useState(false);
   const [notification, setNotification] = useState('')
-  
+  const [isLoading, setIsLoading] = useState(true)
+
 
   const [orderDetails, setOrderDetails] = useState([])
  
@@ -78,6 +80,7 @@ function PlaceOrder() {
     axiosInstance.get('list/shipping-address/')
       .then(response => {
         setShippingAddresses(response.data);
+        setIsLoading(false)
       })
       .catch(error => {
         console.error('Error fetching shipping addresses:', error);
@@ -117,14 +120,15 @@ function PlaceOrder() {
         console.error('Error placing order:', error);
       });
   };
-  console.log(orderDetails)
+
 
   if (orderPlaced) {
     <Notification message='Order Places successfully' />
   }
 
   return (
-    <Box my={25} mx={'auto'} maxW={{base: 'md', md: 'md', lg: 'lg'}}>
+    isLoading? <PageLoadingAnimation/>:
+    (<Box my={25} mx={'auto'} maxW={{base: 'md', md: 'md', lg: 'lg'}}>
         <Text fontSize="xl">Place Your Order</Text>
      
         <Container >    
@@ -177,7 +181,7 @@ function PlaceOrder() {
         )}
         {addressChoice === 'new' ? ('') : (<Button colorScheme="teal" onClick={handlePlaceOrder}>Place Order</Button>)}
       </VStack>
-    </Box>
+    </Box>)
   );
 }
 

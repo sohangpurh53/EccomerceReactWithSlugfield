@@ -94,7 +94,7 @@ const Header = () => {
         <Box mx={0}>
           <Link as={RouterLink} to="/">
             <Center>
-            <FaHome   size={'33.33px'} />              
+            <FaHome   size={'30px'} />              
             </Center>
           </Link>
         </Box>

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { Box,Text, Button, Image, useToast } from '@chakra-ui/react';
+import { Box,Text, Button, Image, useToast, Stack, Avatar, HStack, VStack, Spacer, Flex } from '@chakra-ui/react';
+import { StarIcon } from '@chakra-ui/icons';
 import axiosInstance from '../utils/axiosInstance';
 import Notification from '../utils/Notfication';
 import PageLoadingAnimation from '../utils/LoadingAnimation';
@@ -14,14 +15,19 @@ const SingleProductPage = () => {
   const product_id = SingleproductDetail.id;
   const toast = useToast()
   const [isLoading, setIsLoading] = useState(true);
+  const [productReview, setProductReview] = useState([])
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const product = await axiosInstance(`product/${slug}/`).then((response) => response.data);
         const image = await axiosInstance(`products/images/${slug}/`).then((response) => response.data);
+        const review = await axiosInstance(`products/${slug}/reviews/`).then(response=> response.data);
+
+
         setProductImage(image);
         setSingleProductDetail(product);
+        setProductReview(review)
         setIsLoading(false)
       } catch (error) {
         console.log(`error while fetch products ${error}`);
@@ -119,6 +125,29 @@ const SingleProductPage = () => {
           </Box>
         </Box>
       </Box>
+
+      <Flex mx={2} justifyContent={'flex-end'} w={{base:'300px', md:'md', lg:'lg '}}>
+      <Stack spacing={4}>
+            {productReview.map((review) => (
+                <Box key={review.id} p={4} shadow="md" borderWidth="1px">
+                    <HStack>
+                        <Avatar name={review.user.username} />
+                        <VStack align="start" spacing={0} ml={3}>
+                            <Text fontWeight="bold">{review.user.username}</Text>
+                            <HStack>
+                                {[...Array(review.rating)].map((_, index) => (
+                                    <StarIcon key={index} color="yellow.400" />
+                                ))}
+                            </HStack>
+                            <Text>{review.comment}</Text>
+                        </VStack>
+                        <Spacer />
+                        <Text fontSize="sm">{new Date(review.created_at).toDateString()} </Text>
+                    </HStack>
+                </Box>
+            ))}
+        </Stack>
+      </Flex>
     </>
   );
 };
