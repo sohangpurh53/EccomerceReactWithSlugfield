@@ -82,14 +82,14 @@ const SingleProductPage = () => {
           <Box textAlign="center">
           <Box
       maxW={{base:'md', md:'md', lg:'lg'}} 
-       w="100%"
-        h="100%"
+      
     >
       <Image
       mx={'auto'}
         src={productImage[currentImageIndex]?.image}
         objectFit="contain"
-       
+        w="350px"
+        h="350px"
         alt=""
       />
     </Box>
@@ -111,7 +111,7 @@ const SingleProductPage = () => {
               <Button onClick={addToCart} mb={{ base: 2, md: 0 }} mr={{ md: 2 }}>
                 <i className="fas fa-cart-plus"></i> Add to Cart
               </Button>
-              <Button as={Link} to={'/cart/'}> Checkout Now</Button>
+              <Button as={Link} to={'/cart/'}> Proceed to Cart</Button>
             </Box>
             <Text mt={5}>
             {SingleproductDetail.description}

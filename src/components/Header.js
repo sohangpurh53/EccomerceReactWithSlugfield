@@ -102,7 +102,7 @@ const Header = () => {
         <Spacer />
 
         <Center>
-          <InputGroup maxW="180px" mt={'10px'}>
+          <InputGroup maxW={{base:'150px' , md:'md', lg:'lg'}} mt={'10px'}>
             <InputRightElement >
               <IconButton
                 bg={'white'}
