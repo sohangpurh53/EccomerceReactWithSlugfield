@@ -5,6 +5,8 @@ import { StarIcon } from '@chakra-ui/icons';
 import axiosInstance from '../utils/axiosInstance';
 import Notification from '../utils/Notfication';
 import PageLoadingAnimation from '../utils/LoadingAnimation';
+import ReviewForm from '../AdminDashboard/forms/reviewForm';
+
 
 const SingleProductPage = () => {
   const [notification, setNotification] = useState('');
@@ -16,6 +18,7 @@ const SingleProductPage = () => {
   const toast = useToast()
   const [isLoading, setIsLoading] = useState(true);
   const [productReview, setProductReview] = useState([])
+  const [userData, setUserData] = useState({})
 
   useEffect(() => {
     const fetchData = async () => {
@@ -23,7 +26,8 @@ const SingleProductPage = () => {
         const product = await axiosInstance(`product/${slug}/`).then((response) => response.data);
         const image = await axiosInstance(`products/images/${slug}/`).then((response) => response.data);
         const review = await axiosInstance(`products/${slug}/reviews/`).then(response=> response.data);
-
+        const userResponse = await axiosInstance('user/profile/').then(response=> response.data)
+        setUserData(userResponse)
 
         setProductImage(image);
         setSingleProductDetail(product);
@@ -36,6 +40,15 @@ const SingleProductPage = () => {
     };
     fetchData();
   }, [slug]);
+
+
+
+  const hasSubmittedReview = () => {
+    // Assuming you have user information available in your context or state
+    const userId = userData.id; // Replace 'user-id' with the actual user ID
+
+    return productReview.some((review) => review.user.id === userId);
+  };
 
   const addToCart = async (e) => {
     e.preventDefault();
@@ -113,8 +126,8 @@ const SingleProductPage = () => {
             <p style={{ fontSize: '1.5rem', fontWeight: 'bold', marginBottom: '1rem' }}>
               &#8377;{SingleproductDetail.price}
             </p>
-            <Box display="flex" flexDirection={{ base: 'column', md: 'row' }}>
-              <Button onClick={addToCart} mb={{ base: 2, md: 0 }} mr={{ md: 2 }}>
+            <Box maxW={{base:'200px', md:'md', lg:'lg'}} display="flex" flexDirection={{ base: 'column', md: 'row' }}>
+              <Button onClick={addToCart} mb={{ base: 2, md: 0 }} maxW={{base:'200px', md:'md', lg:'lg'}} mr={{ md: 2 }}>
                 <i className="fas fa-cart-plus"></i> Add to Cart
               </Button>
               <Button as={Link} to={'/cart/'}> Proceed to Cart</Button>
@@ -147,7 +160,10 @@ const SingleProductPage = () => {
                 </Box>
             ))}
         </Stack>
-      </Flex>
+      </Flex> 
+       <Box mx={'auto'} w={{base:'300px', md:'md', lg:'lg '}}>
+        {!hasSubmittedReview() && <ReviewForm />}
+        </Box>
     </>
   );
 };

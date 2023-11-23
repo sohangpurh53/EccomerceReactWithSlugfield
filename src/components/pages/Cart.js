@@ -30,6 +30,7 @@ const Cart = () => {
       setIsLoading(false)
     } catch (error) {
       console.log(error)
+      setIsLoading(false)
     }
   }
 
