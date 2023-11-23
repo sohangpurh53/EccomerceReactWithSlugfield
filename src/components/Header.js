@@ -176,6 +176,7 @@ const Header = () => {
             <Button variant="ghost" as={RouterLink} to="/contact-us/">Contact</Button>
             <Button variant="ghost" as={RouterLink} to="/product/">Products</Button> */}
             <Button  variant="ghost" as={RouterLink} to="/cart/"><CiShoppingCart fontSize={'25px'}/> Cart </Button>
+           {accessToken? <Button  variant="ghost" as={RouterLink} to="/user/profile/"> User-Profile </Button>:''} 
            
 
             {accessToken? <Button variant="ghost" as={RouterLink} to="/signout/" >SignOut</Button>:

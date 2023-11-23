@@ -6,6 +6,7 @@ import axiosInstance from '../utils/axiosInstance';
 import Notification from '../utils/Notfication';
 import PageLoadingAnimation from '../utils/LoadingAnimation';
 import ReviewForm from '../AdminDashboard/forms/reviewForm';
+import { useAuth } from '../context/Authcontext';
 
 
 const SingleProductPage = () => {
@@ -19,19 +20,18 @@ const SingleProductPage = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [productReview, setProductReview] = useState([])
   const [userData, setUserData] = useState({})
+  const {accessToken} = useAuth()
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const product = await axiosInstance(`product/${slug}/`).then((response) => response.data);
         const image = await axiosInstance(`products/images/${slug}/`).then((response) => response.data);
-        const review = await axiosInstance(`products/${slug}/reviews/`).then(response=> response.data);
-        const userResponse = await axiosInstance('user/profile/').then(response=> response.data)
-        setUserData(userResponse)
+       
 
         setProductImage(image);
         setSingleProductDetail(product);
-        setProductReview(review)
+        
         setIsLoading(false)
       } catch (error) {
         console.log(`error while fetch products ${error}`);
@@ -39,6 +39,36 @@ const SingleProductPage = () => {
       }
     };
     fetchData();
+
+    const fetchReview = async ()=>{
+      try {
+        const review = await axiosInstance(`products/${slug}/reviews/`).then(response=> response.data);
+       
+        setProductReview(review)
+      } catch (error) {
+        if(error.request.status===401){
+           console.log()
+        }else{
+          console.log(error)
+        }
+       
+      }
+    }
+    fetchReview()
+    const fetchUser = async ()=>{
+      try {
+         const userResponse = await axiosInstance('user/profile/').then(response=> response.data)
+        setUserData(userResponse)
+      } catch (error) {
+        if(error.request.status===401){
+          console.log()
+        }else{
+          console.log(error)
+        }
+      }
+      
+    }
+    fetchUser()
   }, [slug]);
 
 
@@ -138,8 +168,7 @@ const SingleProductPage = () => {
           </Box>
         </Box>
       </Box>
-
-      <Flex mx={2} justifyContent={'flex-end'} w={{base:'300px', md:'md', lg:'lg '}}>
+<Flex mx={2} justifyContent={'flex-end'} w={{base:'300px', md:'md', lg:'lg '}}>
       <Stack spacing={4}>
             {productReview.map((review) => (
                 <Box key={review.id} p={4} shadow="md" borderWidth="1px">
@@ -161,9 +190,10 @@ const SingleProductPage = () => {
             ))}
         </Stack>
       </Flex> 
-       <Box mx={'auto'} w={{base:'300px', md:'md', lg:'lg '}}>
+      {accessToken? <Box mx={'auto'} w={{base:'300px', md:'md', lg:'lg '}}>
         {!hasSubmittedReview() && <ReviewForm />}
-        </Box>
+        </Box>:''}
+      
     </>
   );
 };
