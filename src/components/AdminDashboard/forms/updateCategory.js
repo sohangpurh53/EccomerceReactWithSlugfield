@@ -18,7 +18,7 @@ const UpdateCategoryForm = () => {
         const data = await axiosInstance(`update/category/${slug}/`).then((response) => response.data);
         setCategoryData(data);
       } catch (error) {
-        console.log(error);
+        console.log(`error while fetch single category ${error.request.status}`);
       }
     };
     fetchData();
@@ -52,7 +52,7 @@ const UpdateCategoryForm = () => {
         }
       });
     } catch (error) {
-      console.log(error);
+      console.log(`error while updating category ${error.request.status}`);
     }
   };
 

@@ -13,7 +13,7 @@ const Categories = () => {
         const category = await axiosInstance('list/category/').then((response) => response.data);
         setCategoryDetails(category);
       } catch (error) {
-        console.log(error);
+        console.log(` error while fetching categoryies ${error.request.status}`);
       }
     };
     fetchData();

@@ -22,7 +22,7 @@ const ListProducts = () => {
     }
     fetchData();
   }, []);
-  console.log(productDetails)
+  // console.log(productDetails)
 
   return (
     <Box >

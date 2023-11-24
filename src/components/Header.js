@@ -137,7 +137,16 @@ const Header = () => {
         
         
 
-        <Spacer />
+        <Spacer /> 
+        {isSmallerThanMd ?  <><Stack>
+          {accessToken? <Button fontWeight={'bold'} fontSize={{base:'12px', md:'md', lg:'lg'}} variant="ghost" as={RouterLink} to="/signout/" onClick={handleDrawerClose}>SignOut</Button>:
+                      <Button fontWeight={'bold'} fontSize={{base:'12px', md:'md', lg:'lg'}} variant="ghost" as={RouterLink} to="/signin/" onClick={handleDrawerClose}>SignIn</Button>}
+        </Stack>
+        <Stack>
+        <Link color={'black'} fontWeight={'normal'} fontSize={{base:'25px', md:'md', lg:'lg'}}  variant="ghost" as={RouterLink} to="/cart/"><CiShoppingCart /></Link>
+        
+        </Stack> </>:'' }
+      
 
         {isSmallerThanMd ? (
           <>
@@ -158,7 +167,8 @@ const Header = () => {
                     
                       <Button  variant="ghost" as={RouterLink} to="/about-us/" onClick={handleDrawerClose}>About Us</Button>
                       <Button variant="ghost" as={RouterLink} to="/contact-us/" onClick={handleDrawerClose}>Contact</Button>
-                      <Button variant="ghost" as={RouterLink} to="/product/" onClick={handleDrawerClose}>Products</Button>
+                  
+                      {accessToken? <Button  variant="ghost" as={RouterLink} to="/user/profile/"> User-Profile </Button>:''} 
 
                      {accessToken? <Button variant="ghost" as={RouterLink} to="/signout/" onClick={handleDrawerClose}>SignOut</Button>:
                       <Button variant="ghost" as={RouterLink} to="/signin/" onClick={handleDrawerClose}>SignIn</Button>}
@@ -171,10 +181,8 @@ const Header = () => {
           </>
         ) : (
           <Stack direction="row" spacing={3}>
-             {/* < DarkModeToggle/> */}
-            {/* <Button variant="ghost" as={RouterLink} to="/about-us/">About Us</Button>
-            <Button variant="ghost" as={RouterLink} to="/contact-us/">Contact</Button>
-            <Button variant="ghost" as={RouterLink} to="/product/">Products</Button> */}
+ 
+           
             <Button  variant="ghost" as={RouterLink} to="/cart/"><CiShoppingCart fontSize={'25px'}/> Cart </Button>
            {accessToken? <Button  variant="ghost" as={RouterLink} to="/user/profile/"> User-Profile </Button>:''} 
            

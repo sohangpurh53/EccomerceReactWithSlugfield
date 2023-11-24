@@ -30,7 +30,7 @@ const DeleteImageProduct = () => {
         }
       });
     } catch (error) {
-      console.log(error);
+      console.log(`error while delte product image ${error.request.status}`);
     }
   };
 

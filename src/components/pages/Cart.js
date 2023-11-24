@@ -29,7 +29,7 @@ const Cart = () => {
       setCartDetails(cart);
       setIsLoading(false)
     } catch (error) {
-      console.log(error)
+      console.log(`error while fetching cart details ${error.request.status}`)
       setIsLoading(false)
     }
   }
@@ -53,7 +53,7 @@ const Cart = () => {
         }
       });
     } catch (error) {
-      console.log(error)
+      console.log(`error while adding product ${error.request.status}`)
     
     }
 
@@ -82,7 +82,7 @@ const Cart = () => {
         console.log('Error occurred while reducing quantity, something went wrong');
       }
     } catch (error) {
-      console.log(error);
+      console.log(`error while reduce product ${error.request.status}`);
     }
   }
 

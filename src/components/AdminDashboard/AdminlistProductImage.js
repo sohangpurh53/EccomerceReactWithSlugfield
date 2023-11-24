@@ -12,12 +12,12 @@ const ProductImageList = () => {
                 const product = await axiosInstance(`products/images/${slug}/`).then(response=> response.data);
                 setProductDetails(product)
             } catch (error) {
-                console.log(error)
+                console.log(`error while fetching products images ${error}`)
             }
         }
         fetchData()
     },[slug])
-    console.log(ProductDetails)
+    // console.log(ProductDetails)
   return (
     <Box maxW="50%" mx="auto">
     {ProductDetails.map((product, index) => (

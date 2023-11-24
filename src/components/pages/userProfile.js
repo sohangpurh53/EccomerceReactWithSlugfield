@@ -11,6 +11,7 @@ import {
   Image,
 } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
+import PageLoadingAnimation from '../utils/LoadingAnimation'
 
 const UserProfile = () => {
   const [userDetails, setUserDetails] = useState([]);
@@ -18,6 +19,7 @@ const UserProfile = () => {
   const[userOrderDetails, setUserOrderDetails] = useState([])
   const { accessToken } = useAuth();
   const Navigate = useNavigate()
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
     if (accessToken) {
@@ -27,13 +29,17 @@ const UserProfile = () => {
              axiosInstance('user/profile/').then((response) => response.data),
              axiosInstance('user/shipping-address/').then((response) => response.data),
              axiosInstance('user/order/').then(response=> response.data),
+            
           ])
+          
          
           setUserDetails(user);
           setUserAddress(useraddress);
-          setUserOrderDetails(userOrderData)
+          setUserOrderDetails(userOrderData) 
+          setIsLoading(false)
         } catch (error) {
-          console.log(error);
+          console.log(error.status);
+          setIsLoading(false)
         }
       };
       fetchData();
@@ -43,7 +49,9 @@ const UserProfile = () => {
   }, [accessToken, Navigate]);
  
   return (
-    <Box maxW="800px" mx="auto" p={4}>
+
+    isLoading? <PageLoadingAnimation/>:
+    (<Box maxW="800px" mx="auto" p={4}>
       <Heading mb={4}>Welcome, {userDetails.username}!</Heading>
       <Text>
         {userDetails.first_name} {userDetails.last_name}
@@ -109,7 +117,7 @@ const UserProfile = () => {
           <ListItem>No reviews yet.</ListItem>
         </List>
       </Box>
-    </Box>
+    </Box>)
   );
 };
 

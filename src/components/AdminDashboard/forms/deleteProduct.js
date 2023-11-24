@@ -13,7 +13,7 @@ const DeleteProduct = () => {
         const product = await axiosInstance(`delete/product/${slug}/`);
         setDeleteProduct(product);
       } catch (error) {
-        console.log(`error while fetch product ${error}`);
+        console.log(`error while fetch product ${error.request.status}`);
       }
     };
     fetchdata();
@@ -29,7 +29,7 @@ const DeleteProduct = () => {
         }
       });
     } catch (error) {
-      console.log(error);
+      console.log(`error while fetch product ${error.request.status}`);
     }
   };
 

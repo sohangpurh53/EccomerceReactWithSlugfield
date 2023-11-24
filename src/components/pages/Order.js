@@ -71,7 +71,7 @@ function PlaceOrder() {
         }
       })
     } catch (error) {
-      console.log(`error while create shipping address ${error}`)
+      console.log(`error while create shipping address ${error.request.status}`)
     }
   }
 

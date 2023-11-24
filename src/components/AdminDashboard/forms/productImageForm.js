@@ -50,7 +50,7 @@ const ProductImageForm = () => {
         },
       }).then((response) => console.log(response.data));
     } catch (error) {
-      console.log(error);
+      console.log(`error while create product images ${error.request.status}`);
     }
   };
 

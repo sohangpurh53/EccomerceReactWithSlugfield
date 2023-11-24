@@ -36,7 +36,7 @@ const ReviewForm = () => {
               });
               setDataFetched(true);
             } catch (error) {
-              console.log(error);
+              console.log(`error while fetch review ${error.request.status}`);
             }
           };
       

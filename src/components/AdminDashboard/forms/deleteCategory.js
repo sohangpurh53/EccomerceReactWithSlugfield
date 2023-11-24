@@ -30,7 +30,7 @@ const DeleteCategory = () => {
         }
       });
     } catch (error) {
-      console.log(error);
+      console.log(`error while delete category ${error.request.status}`);
     }
   };
 

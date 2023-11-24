@@ -19,7 +19,7 @@ const HomePage = () => {
         setPreviousPage(products.previous !== null);
         setIsLoading(false)
       } catch (error) {
-        console.log(`error while fetch products ${error}`);
+        console.log(`error while fetch products homepage ${error}`);
         setIsLoading(false)
       }
     };

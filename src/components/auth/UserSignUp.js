@@ -50,10 +50,10 @@ const UserSignUp = () => {
         setNotification('Registered Successfully Login to Continue')
       }});
     } catch (error) {
-      console.log(error);
+      console.log(`error while creating user ${error.request.status}`);
     }
   };
-console.log(userData)
+// console.log(userData)
 
 return (
   <Flex

@@ -120,7 +120,7 @@ function Footer() {
               <Link to={'#'}>  Satus</Link>
             </Box>
           </Stack>
-          <Stack align={'flex-start'}>
+          {/* <Stack align={'flex-start'}>
             <ListHeader>Stay up to date</ListHeader>
             <Stack direction={'row'}>
               <Input
@@ -142,7 +142,7 @@ function Footer() {
                 icon={<BiMailSend />}
               />
             </Stack>
-          </Stack>
+          </Stack> */}
         </SimpleGrid>
       </Container>
     </Box>

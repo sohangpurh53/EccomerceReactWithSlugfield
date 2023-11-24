@@ -42,7 +42,7 @@ const UpdateProductForm = () => {
         setCategoryOption(categoryData);
         setProductData(product);
       } catch (error) {
-        console.log(error);
+        console.log(`error while fetch single product ${error.request.status}`);
       }
     };
     fetchData();
@@ -85,7 +85,7 @@ const UpdateProductForm = () => {
           }
         });
     } catch (error) {
-      console.log(error);
+      console.log(`error while update product ${error.request.status}`);
     }
   };
 
