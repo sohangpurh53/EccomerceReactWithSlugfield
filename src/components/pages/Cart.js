@@ -14,8 +14,11 @@ import { useNavigate } from 'react-router-dom';
 import { AddIcon, MinusIcon} from '@chakra-ui/icons'
 import { BiCart } from 'react-icons/bi';
 import PageLoadingAnimation from '../utils/LoadingAnimation';
+import { useAuth } from '../context/Authcontext';
+
 
 const Cart = () => {
+  const {accessToken} = useAuth()
   const [cartDetails, setCartDetails] = useState({ cart_items: [] });
   const [notification, setNotification] = useState('')
   const usenavigation = useNavigate()
@@ -29,7 +32,7 @@ const Cart = () => {
       setCartDetails(cart);
       setIsLoading(false)
     } catch (error) {
-      console.log(`error while fetching cart details ${error.request.status}`)
+      console.log(`error while fetching cart details ${error.message}`)
       setIsLoading(false)
     }
   }
@@ -87,10 +90,15 @@ const Cart = () => {
   }
 
   useEffect(() => {
-    fetchData()
+    if(accessToken){
+      fetchData()
+    }else{
+      usenavigation('/signin/')
+    }
+    
    
 
-  }, [])
+  }, [accessToken, usenavigation])
 
   return (
    isLoading? <PageLoadingAnimation/> :(<Flex className="cart-container"  justifyContent={'space-around'}  wrap={'wrap'}>

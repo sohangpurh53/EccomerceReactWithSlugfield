@@ -63,7 +63,7 @@ const SingleProductPage = () => {
         if(error.request.status===401){
           console.log()
         }else{
-          console.log(error)
+          console.log(`error while fetch review ${error.request.status}`)
         }
       }
       

@@ -48,10 +48,17 @@ function PlaceOrder() {
     fetchOrder()
 
   },[])
+
+ 
   const orderTotalAmount = orderDetails.reduce(
     (total, order) => total + order.product.price * order.quantity,
     0
   );
+ const orderTotalWithShipping = orderTotalAmount + orderDetails.reduce(
+    (totalShipping, order) => totalShipping + order.product.shipping_fee * order.quantity,
+    0
+  );
+
   const createShippingAddress = (e) => {
     e.preventDefault();
     const data = {
@@ -75,6 +82,7 @@ function PlaceOrder() {
     }
   }
 
+  
   useEffect(() => {
     // Fetch user's existing shipping addresses
     axiosInstance.get('list/shipping-address/')
@@ -129,7 +137,7 @@ function PlaceOrder() {
   return (
     isLoading? <PageLoadingAnimation/>:
     (<Box my={25} mx={'auto'} maxW={{base: 'md', md: 'md', lg: 'lg'}}>
-        <Text fontSize="xl">Place Your Order</Text>
+        <Text textAlign={'center'} fontSize="xl">Place Your Order</Text>
      
         <Container >    
           {orderDetails.map(order=>(  
@@ -142,12 +150,14 @@ function PlaceOrder() {
           <HStack>
             <Text>Quantity: {order.quantity}</Text>
             <Text>Price: ₹{order.product.price}</Text>
+            
           </HStack>
+          <Text>Shipping Fee: ₹{order.product.shipping_fee}</Text>
           <Text>Total: ₹{order.product.price*order.quantity}</Text>
         </VStack>
       </Box>  
           ))}
-          <Text fontSize={'16px'} fontStyle={'oblique'} textAlign={'center'}> Order Total Amount {orderTotalAmount}</Text>
+          <Text fontSize={'16px'} fontStyle={'oblique'} textAlign={'center'}> Order Total Amount {orderTotalWithShipping}</Text>
             </Container>
 
         

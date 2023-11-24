@@ -29,7 +29,7 @@ const ProductForm = () => {
         setSellerOption(sellerData);
         setCategoryOption(categoryData);
       } catch (error) {
-        console.log(error);
+        console.log(`error while fetch details product form ${error.request.status}`);
       }
     };
     fetchData();

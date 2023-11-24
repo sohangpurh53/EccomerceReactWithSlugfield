@@ -56,7 +56,7 @@ const Header = () => {
       const data = response.data;
       setSearchResults(data);
     } catch (error) {
-      console.error('Error fetching data:', error);
+      console.error(`Error fetching data ${error.message}`, );
     }
   };
   const handleKeyPress = (event) => {

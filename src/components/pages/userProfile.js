@@ -38,7 +38,7 @@ const UserProfile = () => {
           setUserOrderDetails(userOrderData) 
           setIsLoading(false)
         } catch (error) {
-          console.log(error.status);
+          console.log(`error while fetch user profile ${error.message}`);
           setIsLoading(false)
         }
       };
@@ -47,6 +47,8 @@ const UserProfile = () => {
       Navigate('/signin');
     }
   }, [accessToken, Navigate]);
+
+console.log(userOrderDetails)
  
   return (
 
@@ -89,9 +91,13 @@ const UserProfile = () => {
             <br />
             Product: {order.product.name}
             <br />
-            {/* Order ID:  */}
+            {/* Order ID:  */} 
+            Date: {new Date(order.order.created_at).toDateString()}
+            <br />
+            Time: {new Date(order.order.created_at).toLocaleTimeString()}
             <br />
             Order Status:
+           
             <Badge
               ml={2}
               colorScheme={order.order.is_paid ? 'green' : 'red'}
