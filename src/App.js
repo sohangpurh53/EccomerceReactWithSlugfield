@@ -22,6 +22,7 @@ import DeleteImageProduct from './components/AdminDashboard/forms/deleteProductI
 import Cart from './components/pages/Cart';
 import Order from './components/pages/Order';
 import AdminDashboard from './components/AdminDashboard/AdminDashboard.js';
+import ContactForm from './components/pages/ContactUs.js';
 
 function App() {
   return (
@@ -52,6 +53,7 @@ function App() {
       <Route path='/cart/' element={<Cart/>} ></Route>
       <Route path='/order/' element={<Order/>} ></Route>
       <Route path='/admin/dashboard/' element={<AdminDashboard/>} ></Route>
+      <Route path='/contact-us/' element={<ContactForm/>} ></Route>
       
     
      </Routes>
