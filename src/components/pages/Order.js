@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axiosInstance from '../utils/axiosInstance';
-import { useNavigate } from 'react-router-dom';
+import {  useNavigate } from 'react-router-dom';
 import {
   Box,
   Button,
@@ -19,6 +19,7 @@ import { Container } from 'reactstrap';
 import PageLoadingAnimation from '../utils/LoadingAnimation';
 
 
+
 function PlaceOrder() {
   const [addressChoice, setAddressChoice] = useState(''); // Track user's choice of address
   const [shippingAddress, setShippingAddress] = useState({
@@ -34,10 +35,9 @@ function PlaceOrder() {
   const [orderPlaced, setOrderPlaced] = useState(false);
   const [notification, setNotification] = useState('')
   const [isLoading, setIsLoading] = useState(true)
-
-
   const [orderDetails, setOrderDetails] = useState([])
  
+  
 
   useEffect(()=>{
 
@@ -118,7 +118,8 @@ function PlaceOrder() {
     axiosInstance.post('create/order/', data)
       .then(response => {if(response.data){
         setOrderPlaced(true);
-        navigate('/')
+        navigate('/success/')
+      
       }else{
         console.log('something went wrong')
       }

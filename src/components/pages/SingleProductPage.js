@@ -168,7 +168,7 @@ const SingleProductPage = () => {
           </Box>
         </Box>
       </Box>
-<Flex mx={2} justifyContent={'flex-end'} w={{base:'300px', md:'md', lg:'lg '}}>
+<Flex mx={2} justifyContent={'flex-end'} w={{base:'250px', md:'md', lg:'lg '}}>
       <Stack spacing={4}>
             {productReview.map((review) => (
                 <Box key={review.id} p={4} shadow="md" borderWidth="1px">
@@ -183,8 +183,9 @@ const SingleProductPage = () => {
                             </HStack>
                             <Text>{review.comment}</Text>
                         </VStack>
+                        <VStack align="start" spacing={0} ml={3}> <Text color={'blackAlpha.600'} fontSize='sm'>{new Date(review.created_at).toDateString()} </Text></VStack>   
                         <Spacer />
-                        <Text fontSize="sm">{new Date(review.created_at).toDateString()} </Text>
+                       
                     </HStack>
                 </Box>
             ))}

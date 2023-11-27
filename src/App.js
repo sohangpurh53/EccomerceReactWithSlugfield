@@ -23,6 +23,7 @@ import Cart from './components/pages/Cart';
 import Order from './components/pages/Order';
 import AdminDashboard from './components/AdminDashboard/AdminDashboard.js';
 import ContactForm from './components/pages/ContactUs.js';
+import SuccessPage from './components/pages/successPage.js';
 
 function App() {
   return (
@@ -54,6 +55,7 @@ function App() {
       <Route path='/order/' element={<Order/>} ></Route>
       <Route path='/admin/dashboard/' element={<AdminDashboard/>} ></Route>
       <Route path='/contact-us/' element={<ContactForm/>} ></Route>
+      <Route  path='/success/' element={<SuccessPage/>} ></Route>
       
     
      </Routes>

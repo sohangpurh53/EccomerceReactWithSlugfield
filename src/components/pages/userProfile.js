@@ -48,7 +48,6 @@ const UserProfile = () => {
     }
   }, [accessToken, Navigate]);
 
-console.log(userOrderDetails)
  
   return (
 
