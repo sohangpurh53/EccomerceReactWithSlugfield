@@ -102,7 +102,7 @@ const Header = () => {
         <Spacer />
 
         <Center>
-          <InputGroup maxW={{base:'150px' , md:'md', lg:'lg'}} mt={'10px'}>
+          <InputGroup ml={4} maxW={{base:'175px' , md:'md', lg:'lg'}} mt={'10px'}>
             <InputRightElement >
               <IconButton
                 bg={'white'}
@@ -138,14 +138,17 @@ const Header = () => {
         
 
         <Spacer /> 
-        {isSmallerThanMd ?  <><Stack>
-          {accessToken? <Button fontWeight={'bold'} fontSize={{base:'12px', md:'md', lg:'lg'}} variant="ghost" as={RouterLink} to="/signout/" onClick={handleDrawerClose}>SignOut</Button>:
-                      <Button fontWeight={'bold'} fontSize={{base:'12px', md:'md', lg:'lg'}} variant="ghost" as={RouterLink} to="/signin/" onClick={handleDrawerClose}>SignIn</Button>}
+        {isSmallerThanMd ?  <>
+          <Stack ml={3} mr={-4} spacing={0} direction='row' align={'center'}>
+        <Link  color={'white'} fontWeight={'normal'} fontSize={{base:'27px', md:'md', lg:'lg'}}  variant="ghost" as={RouterLink} to="/cart/"><CiShoppingCart /></Link>
+        {accessToken? <Button bg={'white'} fontWeight={'bold'} fontSize={{base:'14px', md:'md', lg:'lg'}} variant="ghost" as={RouterLink} to="/signout/" onClick={handleDrawerClose}>SignOut</Button>:
+                      <Button color={'white'} fontWeight={'normal'} fontFamily={'serif'} fontSize={{base:'14px', md:'md', lg:'lg'}} variant="ghost" as={RouterLink} to="/signin/" onClick={handleDrawerClose}>SignIn</Button>}
         </Stack>
-        <Stack>
-        <Link color={'black'} fontWeight={'normal'} fontSize={{base:'25px', md:'md', lg:'lg'}}  variant="ghost" as={RouterLink} to="/cart/"><CiShoppingCart /></Link>
         
-        </Stack> </>:'' }
+        {/* <Stack spacing={5}>
+          
+        </Stack> */}
+         </>:'' }
       
 
         {isSmallerThanMd ? (
