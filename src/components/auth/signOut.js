@@ -15,10 +15,11 @@ function SignOutComponent() {
                     localStorage.removeItem('refresh_token');
                     
                     Navigate('/signin');
+                    
                 } else {
                     console.log('something went wrong');
                 }
-                Navigate(0)
+               Navigate(0)
             } catch (error) {
                 console.error(error);
             }

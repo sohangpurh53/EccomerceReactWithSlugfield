@@ -80,7 +80,6 @@ const ReviewForm = () => {
 
   return (
     <>
-      {/* Your other components and UI elements */}
       <FormControl>
         <FormLabel>Rating</FormLabel>
         <Box display="flex" alignItems="center">

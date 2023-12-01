@@ -142,12 +142,14 @@ const SingleProductPage = () => {
         alt=""
       />
     </Box>
-            <Button onClick={handlePrevClick} mt={2} mr={2}>
+    {productImage.length > 1? <> 
+             <Button onClick={handlePrevClick} mt={2} mr={2}>
               Previous
             </Button>
             <Button onClick={handleNextClick} mt={2}>
               Next
-            </Button>
+            </Button> </>:'' }
+           
           </Box>
           <Box flex="1" ml={{ md: 4 }}>
             <Text fontWeight={'bold'} fontSize={'16px'}>{SingleproductDetail.name}</Text>
@@ -168,7 +170,7 @@ const SingleProductPage = () => {
           </Box>
         </Box>
       </Box>
-<Flex mx={2} justifyContent={'flex-end'} w={{base:'250px', md:'md', lg:'lg '}}>
+<Flex mx={2} ml={10} justifyContent={'flex-end'} w={{base:'250px', md:'md', lg:'lg '}}>
       <Stack spacing={4}>
             {productReview.map((review) => (
                 <Box key={review.id} p={4} shadow="md" borderWidth="1px">

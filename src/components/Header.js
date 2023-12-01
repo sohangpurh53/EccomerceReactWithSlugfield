@@ -94,7 +94,7 @@ const Header = () => {
         <Box mx={0}>
           <Link as={RouterLink} to="/">
             <Center>
-            <FaHome   size={'30px'} />              
+            <FaHome   size={'25px'} />              
             </Center>
           </Link>
         </Box>
@@ -141,7 +141,7 @@ const Header = () => {
         {isSmallerThanMd ?  <>
           <Stack ml={3} mr={-4} spacing={0} direction='row' align={'center'}>
         <Link  color={'white'} fontWeight={'normal'} fontSize={{base:'27px', md:'md', lg:'lg'}}  variant="ghost" as={RouterLink} to="/cart/"><CiShoppingCart /></Link>
-        {accessToken? <Button bg={'white'} fontWeight={'bold'} fontSize={{base:'14px', md:'md', lg:'lg'}} variant="ghost" as={RouterLink} to="/signout/" onClick={handleDrawerClose}>SignOut</Button>:
+        {accessToken? <Button color={'white'} fontWeight={'bold'} fontSize={{base:'14px', md:'md', lg:'lg'}} variant="ghost" as={RouterLink} to="/signout/" onClick={handleDrawerClose}>SignOut</Button>:
                       <Button color={'white'} fontWeight={'normal'} fontFamily={'serif'} fontSize={{base:'14px', md:'md', lg:'lg'}} variant="ghost" as={RouterLink} to="/signin/" onClick={handleDrawerClose}>SignIn</Button>}
         </Stack>
         
@@ -197,12 +197,12 @@ const Header = () => {
       </Flex>
       <Box>
   {searchResults !== null && (
-    <Box maxW={'400px'} mt="4" mx={'auto'} p="4" bgColor="#fff" borderRadius="md" boxShadow="md">
+    <Box  maxW={'400px'} mt="4" mx={'auto'} p="4" bgColor="#fff" borderRadius="md" boxShadow="md">
       {searchResults && searchResults.length > 0 ? (
         <>
           <Text fontWeight="bold" fontSize="lg">Search Results:</Text>
           {searchResults.map(result => (
-            <Box key={result.id} m="2" p="2" borderWidth="1px" borderRadius="md">
+            <Box display={'flex'} flexDir={'column'} alignItems={'center'} key={result.id} m="2" p="2" borderWidth="1px" borderRadius="md">
               <Text color={'black'} fontWeight="bold" fontSize="md">{result.name}</Text>
               <Box h={'50px'} w={'50px'}>
                 <Image boxSize={'100%'} objectFit={'contain'} src={`http://127.0.0.1:8000${result.first_image}`} alt={result.name} />
