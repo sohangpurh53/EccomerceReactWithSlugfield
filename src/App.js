@@ -24,6 +24,8 @@ import Order from './components/pages/Order';
 import AdminDashboard from './components/AdminDashboard/AdminDashboard.js';
 import ContactForm from './components/pages/ContactUs.js';
 import SuccessPage from './components/pages/successPage.js';
+import ProductCategoryList from './components/pages/productCategorizedList.js';
+import UpdateShippingAddress from './components/AdminDashboard/forms/updateShippingAddressForm.js';
 
 function App() {
   return (
@@ -56,6 +58,8 @@ function App() {
       <Route path='/admin/dashboard/' element={<AdminDashboard/>} ></Route>
       <Route path='/contact-us/' element={<ContactForm/>} ></Route>
       <Route  path='/success/' element={<SuccessPage/>} ></Route>
+      <Route  path='/products/categories/' element={<ProductCategoryList/>} ></Route>
+      <Route path='/update/shipping-address/:id/' element={<UpdateShippingAddress/>}> </Route>
       
     
      </Routes>

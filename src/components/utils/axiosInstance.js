@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const baseURL = 'http://localhost:8000/api/';
 
-const Instance = axios.create({
+const instance = axios.create({
   baseURL: baseURL,
   timeout: 10000,
   headers: {
@@ -11,7 +11,10 @@ const Instance = axios.create({
   },
 });
 
-Instance.interceptors.request.use(
+let isRefreshing = false;
+let refreshFailedRequests = [];
+
+instance.interceptors.request.use(
   (config) => {
     const access_token = localStorage.getItem('access_token');
 
@@ -26,37 +29,53 @@ Instance.interceptors.request.use(
   }
 );
 
-Instance.interceptors.response.use(
-  async (response) => {
+instance.interceptors.response.use(
+  (response) => {
     return response;
   },
   async function (error) {
     const originalRequest = error.config;
 
     if (error.response && error.response.status === 401 && !originalRequest._retry) {
-      originalRequest._retry = true;
+      if (!isRefreshing) {
+        isRefreshing = true;
 
-      const refresh_token = localStorage.getItem('refresh_token');
+        const refresh_token = localStorage.getItem('refresh_token');
 
-      if (refresh_token) {
-        try {
-          const response = await Instance.post('/token/refresh/', { refresh: refresh_token });
-          const { access } = response.data;
-
-          localStorage.setItem('access_token', access);
-
-          // Retry the original request with the new access token
-          originalRequest.headers['Authorization'] = `Bearer ${access}`;
-
+        if (refresh_token) {
           try {
-            const retryResponse = await Instance(originalRequest);
-            return retryResponse;
-          } catch (retryError) {
-            console.error('Error retrying original request:', retryError);
+            const response = await instance.post('/token/refresh/', { refresh: refresh_token });
+            const { access } = response.data;
+
+            localStorage.setItem('access_token', access);
+
+            originalRequest.headers['Authorization'] = `Bearer ${access}`;
+
+            // Retry the original request with the new access token
+            return instance(originalRequest);
+          } catch (refreshError) {
+            console.error('Error refreshing token:', refreshError);
+            isRefreshing = false;
+            localStorage.removeItem('access_token');
+            localStorage.removeItem('refresh_token');
+
+            // Reject the failed requests
+            refreshFailedRequests.forEach((failedRequest) => {
+              failedRequest.reject(refreshError);
+            });
+            refreshFailedRequests = [];
+            return Promise.reject(refreshError);
+          } finally {
+            isRefreshing = false;
           }
-        } catch (refreshError) {
-          console.error('Error refreshing token:', refreshError);
         }
+      } else {
+        // If refreshing, queue the failed request
+        return new Promise((resolve, reject) => {
+          refreshFailedRequests.push({ resolve, reject });
+        }).then(() => {
+          return instance(originalRequest);
+        });
       }
     }
 
@@ -64,4 +83,4 @@ Instance.interceptors.response.use(
   }
 );
 
-export default Instance;
+export default instance;

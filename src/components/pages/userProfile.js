@@ -7,16 +7,19 @@ import {
   Text,
   List,
   ListItem,
+  Button,
   Badge,
   Image,
 } from '@chakra-ui/react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import PageLoadingAnimation from '../utils/LoadingAnimation'
+
 
 const UserProfile = () => {
   const [userDetails, setUserDetails] = useState([]);
   const [userAddress, setUserAddress] = useState([]);
   const[userOrderDetails, setUserOrderDetails] = useState([])
+  const[userReviews, setUserReviews] = useState([])
   const { accessToken } = useAuth();
   const Navigate = useNavigate()
   const [isLoading, setIsLoading] = useState(true)
@@ -25,17 +28,22 @@ const UserProfile = () => {
     if (accessToken) {
       const fetchData = async () => {
         try {
-          const [user, useraddress, userOrderData] = await Promise.all([
+          const [user, useraddress, userOrderData, usereview] = await Promise.all([
              axiosInstance('user/profile/').then((response) => response.data),
              axiosInstance('user/shipping-address/').then((response) => response.data),
              axiosInstance('user/order/').then(response=> response.data),
+             axiosInstance('user/review/').then(response=> response.data),
+             
             
           ])
           
          
+         
           setUserDetails(user);
           setUserAddress(useraddress);
-          setUserOrderDetails(userOrderData) 
+          setUserOrderDetails(userOrderData)
+          setUserReviews(usereview)
+          
           setIsLoading(false)
         } catch (error) {
           console.log(`error while fetch user profile ${error.message}`);
@@ -47,7 +55,7 @@ const UserProfile = () => {
       Navigate('/signin');
     }
   }, [accessToken, Navigate]);
-
+console.log(userReviews)
  
   return (
 
@@ -74,7 +82,9 @@ const UserProfile = () => {
             <br />
             <strong>Postal Code:</strong> {address.postal_code}
           </Text>
+          <Button as={Link} to={`/update/shipping-address/${address.id}/`}>Update</Button>
         </Box>
+        
       ))}
 
       <Heading mt={8} mb={4} size="md">
@@ -84,7 +94,7 @@ const UserProfile = () => {
          <List key={order.id} styleType="none" pl={0}>
         {/* Replace these dummy values with actual order data */}
         <ListItem mb={4}>
-        <Box h={'50px'} w={'50px'} ><Image src={`http://127.0.0.1:8000${order.product.first_image}`} alt="Product" objectFit={'contain'} boxSize="100%" mr={4} /></Box>  
+        <Box h={'50px'} w={'50px'} ><Image src={`https://api.eccomerce.digitaltek.co.in${order.product.first_image}`} alt="Product" objectFit={'contain'} boxSize="100%" mr={4} /></Box>  
           <Text display="inline-block" verticalAlign="top">
             Quantity: {order.quantity}
             <br />
@@ -112,15 +122,19 @@ const UserProfile = () => {
 
       <Box mt={8}>
         <Heading size="md">Your Reviews:</Heading>
-        <List pl={0}>
+        {userReviews.map(review =>(
+          review.length>0? (<Box pl={0}>
           {/* Replace these dummy values with actual review data */}
           <ListItem>
-            <Text>Product:</Text>
-            <Text>Rating:</Text>
-            <Text>Comment:</Text>
+            <Text>Product:{review.product}</Text>
+            <Text>Rating:{review.rating}</Text>
+            <Text>Comment:{review.comment}</Text>
           </ListItem>
-          <ListItem>No reviews yet.</ListItem>
-        </List>
+          
+        </Box>):<ListItem>No reviews yet.</ListItem>
+          
+        ))}
+        
       </Box>
     </Box>)
   );

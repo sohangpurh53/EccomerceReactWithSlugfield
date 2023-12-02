@@ -52,7 +52,7 @@ const HomePage = () => {
           mx={2}
           my={4}
           borderWidth={'1px'}
-          borderColor={'teal.300'}
+          borderColor={'teal.500'}
           borderRadius={'md'}
           p={2}
           textAlign={'center'}
@@ -62,7 +62,7 @@ const HomePage = () => {
               objectFit={'contain'}
               mt={2}
               boxSize='100%'
-              src={`http://localhost:8000/${product.first_image}`}
+              src={`https://api.eccomerce.digitaltek.co.in/${product.first_image}`}
               alt=""
             />
           </Box>

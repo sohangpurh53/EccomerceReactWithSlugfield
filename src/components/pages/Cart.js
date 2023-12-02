@@ -110,7 +110,7 @@ const Cart = () => {
             <Heading as="h3" size="sm">Item name: {item.product.name}</Heading>
             <Box h='50px' w='50px'>
               <Image
-              src={`http://127.0.0.1:8000${item.product.first_image}`}
+              src={`https://api.eccomerce.digitaltek.co.in${item.product.first_image}`}
               objectFit={'contain'}
               boxSize='100%'
               />
