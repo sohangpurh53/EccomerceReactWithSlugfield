@@ -9,10 +9,17 @@ import {
   ListItem,
   Button,
   Badge,
+  Flex,
+  Stack,
+  HStack,
+  VStack,
+  // Avatar,
   Image,
+  Spacer,
 } from '@chakra-ui/react';
 import { Link, useNavigate } from 'react-router-dom';
 import PageLoadingAnimation from '../utils/LoadingAnimation'
+import { StarIcon } from '@chakra-ui/icons';
 
 
 const UserProfile = () => {
@@ -55,7 +62,6 @@ const UserProfile = () => {
       Navigate('/signin');
     }
   }, [accessToken, Navigate]);
-console.log(userReviews)
  
   return (
 
@@ -90,7 +96,7 @@ console.log(userReviews)
       <Heading mt={8} mb={4} size="md">
         Your Orders:
       </Heading>
-      {userOrderDetails.map(order =>(
+      {userOrderDetails.length>0? (userOrderDetails.map(order =>(
          <List key={order.id} styleType="none" pl={0}>
         {/* Replace these dummy values with actual order data */}
         <ListItem mb={4}>
@@ -117,25 +123,57 @@ console.log(userReviews)
           </Text>
         </ListItem>
       </List>
-      ))}
+      ))):(<Text>No Order Yet</Text>)}
      
 
-      <Box mt={8}>
-        <Heading size="md">Your Reviews:</Heading>
-        {userReviews.map(review =>(
-          review.length>0? (<Box pl={0}>
-          {/* Replace these dummy values with actual review data */}
-          <ListItem>
-            <Text>Product:{review.product}</Text>
-            <Text>Rating:{review.rating}</Text>
-            <Text>Comment:{review.comment}</Text>
-          </ListItem>
-          
-        </Box>):<ListItem>No reviews yet.</ListItem>
-          
-        ))}
+     {/* <Box mt={8}>
+  <Heading size="md">Your Reviews:</Heading>
+  {userReviews.length > 0 ? (
+    userReviews.map(review => (
+      <Box  key={review.id} pl={0}>
+       
+          <Text>Product: {review.product}</Text>
+          <Text>Rating: {review.rating}</Text>
+          <Text>Comment: {review.comment}</Text>
         
       </Box>
+    ))
+  ) : (
+    <Text>No reviews yet.</Text>
+  )}
+</Box> */}
+  <Flex mx={2} ml={10} justifyContent={'flex-end'} w={{ base: '250px', md: 'md', lg: 'lg' }}>
+  <Heading textAlign={'justify'} size={'md'}> Your Reviews:</Heading>
+  {userReviews.length > 0 ? (
+    <Stack spacing={4}>
+      {/* <Text  fontSize={{base:'16px', md:'md', lg:'lg'}}></Text> */}
+      {userReviews.map((review) => (
+        <Box key={review.id} p={4} shadow="md" borderWidth="1px">
+          <HStack>
+            {/* <Avatar name={review.user.username} /> */}
+            <VStack align="start" spacing={0} ml={3}>
+              <Text fontSize={{base:'14px', md:'md'}} fontStyle={'oblique'}>{review.product.name}</Text>
+              <HStack>
+                {[...Array(review.rating)].map((_, index) => (
+                  <StarIcon key={index} color="yellow.400" />
+                ))}
+              </HStack>
+              <Text>{review.comment}</Text>
+            </VStack>
+            <VStack align="start" spacing={0} ml={3}>
+              <Text color={'blackAlpha.600'} fontSize="sm">
+                {new Date(review.created_at).toDateString()}
+              </Text>
+            </VStack>
+            <Spacer />
+          </HStack>
+        </Box>
+      ))}
+    </Stack>
+  ) : (
+    <Text>No reviews yet.</Text>
+  )}
+</Flex>
     </Box>)
   );
 };

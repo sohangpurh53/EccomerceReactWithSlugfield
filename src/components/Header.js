@@ -171,7 +171,7 @@ const Header = () => {
                       <Button  variant="ghost" as={RouterLink} to="/about-us/" onClick={handleDrawerClose}>About Us</Button>
                       <Button variant="ghost" as={RouterLink} to="/contact-us/" onClick={handleDrawerClose}>Contact</Button>
                   
-                      {accessToken? <Button  variant="ghost" as={RouterLink} to="/user/profile/"> User-Profile </Button>:''} 
+                      {accessToken? <Button  variant="ghost" as={RouterLink} onClick={handleDrawerClose} to="/user/profile/"> User-Profile </Button>:''} 
 
                      {accessToken? <Button variant="ghost" as={RouterLink} to="/signout/" onClick={handleDrawerClose}>SignOut</Button>:
                       <Button variant="ghost" as={RouterLink} to="/signin/" onClick={handleDrawerClose}>SignIn</Button>}
