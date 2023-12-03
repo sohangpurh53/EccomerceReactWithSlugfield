@@ -23,7 +23,7 @@ import Cart from './components/pages/Cart';
 import Order from './components/pages/Order';
 import AdminDashboard from './components/AdminDashboard/AdminDashboard.js';
 import ContactForm from './components/pages/ContactUs.js';
-import SuccessPage from './components/pages/successPage.js';
+// import SuccessPage from './components/pages/successPage.js';
 import ProductCategoryList from './components/pages/productCategorizedList.js';
 import UpdateShippingAddress from './components/AdminDashboard/forms/updateShippingAddressForm.js';
 import UpdateReview from './components/AdminDashboard/forms/updateReiveiewForm.js';
@@ -58,7 +58,7 @@ function App() {
       <Route path='/order/' element={<Order/>} ></Route>
       <Route path='/admin/dashboard/' element={<AdminDashboard/>} ></Route>
       <Route path='/contact-us/' element={<ContactForm/>} ></Route>
-      <Route  path='/success/' element={<SuccessPage/>} ></Route>
+      {/* <Route  path='/success/' element={<SuccessPage/>} ></Route> */}
       <Route  path='/products/categories/' element={<ProductCategoryList/>} ></Route>
       <Route path='/update/shipping-address/:id/' element={<UpdateShippingAddress/>}> </Route>
       <Route path='/update/review/:id/' element={<UpdateReview/>}></Route>

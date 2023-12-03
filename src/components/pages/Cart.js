@@ -40,6 +40,7 @@ const Cart = () => {
 
   const cart_items = cartDetails.cart_items
 
+ 
 
   const addToCart = async (e, product_id) => {
     e.preventDefault();
@@ -101,6 +102,7 @@ const Cart = () => {
   }, [accessToken, usenavigation])
 
   return (
+    
    isLoading? <PageLoadingAnimation/> :(<Flex className="cart-container"  justifyContent={'space-around'}  wrap={'wrap'}>
       <Notification message={notification} />
       <Flex direction="column" justifyContent={'flex-start'} alignItems={'center'}>

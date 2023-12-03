@@ -46,12 +46,7 @@ const SingleProductPage = () => {
        
         setProductReview(review)
       } catch (error) {
-        if(error.request.status===401){
-           console.log()
-        }else{
-          console.log(`error while fetch review ${error.request.status}`)
-        }
-       
+           console.log(`error while fetch review ${error.request.status}`)
       }
     }
     fetchReview()
@@ -59,12 +54,9 @@ const SingleProductPage = () => {
       try {
          const userResponse = await axiosInstance('user/profile/').then(response=> response.data)
         setUserData(userResponse)
-      } catch (error) {
-        if(error.request.status===401){
-          console.log()
-        }else{
-          console.log(`error while fetch review ${error.request.status}`)
-        }
+      } catch (error) { 
+        console.log(`error while fetch user ${error.request.status}`)
+        
       }
       
     }
@@ -82,8 +74,10 @@ const SingleProductPage = () => {
 
   const addToCart = async (e) => {
     e.preventDefault();
+   
     try {
-      await axiosInstance.post(`add_to_cart/${product_id}/`).then((response) => {
+      if (accessToken){
+      const response = await axiosInstance.post(`add_to_cart/${product_id}/`)
         if (response.data) {
           setNotification('Item Added Successfully');
           setTimeout(() => {
@@ -92,20 +86,31 @@ const SingleProductPage = () => {
         } else {
           console.log('Error occur while adding, something went wrong');
         }
-      });
+   }else{
+    toast({
+          title: `Please login to continue`,
+          description: "Please login to proceed cart or signup",
+          status: 'warning',
+          position:'top-right',
+          duration: 5000,
+          isClosable: true,
+        })
+   }
+     
     } catch (error) {
-     if(error.request.status===401){ 
-      toast({
-        title: `Please login to continue`,
-        description: "Please login to proceed cart or signup",
-        status: 'warning',
-        position:'top-right',
-        duration: 5000,
-        isClosable: true,
-      })
-     }else{
-      console.log(error.request.status)
-     }
+      console.log(`Error while product add to cart ${error.message}`)
+    //  if(error.request.status===401){ 
+    //   toast({
+    //     title: `Please login to continue`,
+    //     description: "Please login to proceed cart or signup",
+    //     status: 'warning',
+    //     position:'top-right',
+    //     duration: 5000,
+    //     isClosable: true,
+    //   })
+    //  }else{
+    //   console.log(error.request.status)
+    //  }
 
     }
   };

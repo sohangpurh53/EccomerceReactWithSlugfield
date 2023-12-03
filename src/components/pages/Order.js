@@ -17,6 +17,7 @@ import {
 import Notification from '../utils/Notfication';
 import { Container } from 'reactstrap';
 import PageLoadingAnimation from '../utils/LoadingAnimation';
+import SuccessPage from './successPage';
 
 
 
@@ -37,7 +38,7 @@ function PlaceOrder() {
   const [isLoading, setIsLoading] = useState(true)
   const [orderDetails, setOrderDetails] = useState([])
  
-  
+
 
   useEffect(()=>{
 
@@ -118,7 +119,7 @@ function PlaceOrder() {
     axiosInstance.post('create/order/', data)
       .then(response => {if(response.data){
         setOrderPlaced(true);
-        navigate('/success/')
+        // navigate('/success/')
       
       }else{
         console.log('something went wrong')
@@ -136,7 +137,12 @@ function PlaceOrder() {
   }
 
   return (
-    isLoading? <PageLoadingAnimation/>:
+    orderDetails.length > 0 ? (
+    isLoading? (
+      <PageLoadingAnimation />
+    ) : orderPlaced ? (
+      <SuccessPage />
+    ):
     (<Box my={25} mx={'auto'} maxW={{base: 'md', md: 'md', lg: 'lg'}}>
         <Text textAlign={'center'} fontSize="xl">Place Your Order</Text>
      
@@ -192,7 +198,7 @@ function PlaceOrder() {
         )}
         {addressChoice === 'new' ? ('') : (<Button colorScheme="teal" onClick={handlePlaceOrder}>Place Order</Button>)}
       </VStack>
-    </Box>)
+    </Box>)) : null
   );
 }
 

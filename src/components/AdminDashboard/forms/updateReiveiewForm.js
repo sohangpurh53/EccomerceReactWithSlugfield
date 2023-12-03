@@ -105,7 +105,7 @@ const UpdateReview = () => {
           onClick={handleSubmit}
           disabled={!reviewFormData.rating || !reviewFormData.comment.trim()}
         >
-          Submit Review
+          Update Review
         </Button>
       </FormControl>
       </Box>
