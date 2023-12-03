@@ -26,6 +26,7 @@ import ContactForm from './components/pages/ContactUs.js';
 import SuccessPage from './components/pages/successPage.js';
 import ProductCategoryList from './components/pages/productCategorizedList.js';
 import UpdateShippingAddress from './components/AdminDashboard/forms/updateShippingAddressForm.js';
+import UpdateReview from './components/AdminDashboard/forms/updateReiveiewForm.js';
 
 function App() {
   return (
@@ -60,6 +61,7 @@ function App() {
       <Route  path='/success/' element={<SuccessPage/>} ></Route>
       <Route  path='/products/categories/' element={<ProductCategoryList/>} ></Route>
       <Route path='/update/shipping-address/:id/' element={<UpdateShippingAddress/>}> </Route>
+      <Route path='/update/review/:id/' element={<UpdateReview/>}></Route>
       
     
      </Routes>

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import axiosInstance from '../../utils/axiosInstance'
-import { useToast,Input,Box, FormControl,FormLabel,Button, Flex } from '@chakra-ui/react'
+import { useToast,Input, FormControl,FormLabel,Button, Flex } from '@chakra-ui/react'
 
 const UpdateShippingAddress = () => {
   const [shippingAddress, setShippingAddress] = useState({

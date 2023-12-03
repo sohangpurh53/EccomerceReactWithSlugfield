@@ -142,7 +142,7 @@ const UserProfile = () => {
     <Text>No reviews yet.</Text>
   )}
 </Box> */}
-  <Flex mx={2} ml={10} justifyContent={'flex-end'} w={{ base: '250px', md: 'md', lg: 'lg' }}>
+  <Flex mx={2} ml={10}  w={{ base: '250px', md: 'md', lg: 'lg' }}>
   <Heading textAlign={'justify'} size={'md'}> Your Reviews:</Heading>
   {userReviews.length > 0 ? (
     <Stack spacing={4}>
@@ -152,7 +152,11 @@ const UserProfile = () => {
           <HStack>
             {/* <Avatar name={review.user.username} /> */}
             <VStack align="start" spacing={0} ml={3}>
+              <Box w={{base:'30px', md:'50px'}}>
+                <Image objectFit={'contain'} src={`https://api.eccomerce.digitaltek.co.in${review.product.first_image}`}/>
+              </Box> 
               <Text fontSize={{base:'14px', md:'md'}} fontStyle={'oblique'}>{review.product.name}</Text>
+             
               <HStack>
                 {[...Array(review.rating)].map((_, index) => (
                   <StarIcon key={index} color="yellow.400" />
@@ -167,6 +171,7 @@ const UserProfile = () => {
             </VStack>
             <Spacer />
           </HStack>
+          <Button as={Link} to={`/update/review/${review.id}/`}>Update</Button>
         </Box>
       ))}
     </Stack>

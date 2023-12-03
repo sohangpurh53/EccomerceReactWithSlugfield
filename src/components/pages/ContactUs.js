@@ -144,7 +144,7 @@ const ContactForm = () => {
 
              <Box>
                
-              <Button  as={Link} to={'mailto:sales@rajengg.co.in'}>
+              <Button  as={Link} to={'mailto:ecommerce@digitaltek.co.in'}>
              <FaEnvelope/>  <Text ml={2} fontWeight={'bold'} color={'gray.500'} fontSize={'1rem'}>  Get In Touch</Text> 
                 </Button> 
              </Box>
