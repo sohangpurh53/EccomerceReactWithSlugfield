@@ -11,12 +11,12 @@ import {
   Alert,
   AlertIcon,
   CloseButton,
-  IconButton,
+  // IconButton,
   Flex,
 } from '@chakra-ui/react';
 import axiosInstance from '../utils/axiosInstance';
 import LoadingComponent from '../utils/LoadingAnimation';
-import { FaEnvelope, FaFacebook,  FaInstagram,  FaWhatsapp,  } from 'react-icons/fa';
+import { FaEnvelope,  } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
 const ContactForm = () => {
@@ -129,9 +129,10 @@ const ContactForm = () => {
     )}
     <Flex  wrap={'wrap'} gap={'20px'} alignItems={'center'} justifyContent={'center'}>
       <Text fontWeight={'bold'} color={'gray.500'} fontSize={'1rem'}>
-        Connect Us On Social Media
+        Connect Us 
+        {/* On Social Media */}
       </Text>
-         <IconButton color={'green.400'}  borderRadius={'50%'} as={Link} target='_blank' fontSize={'30px'} label={'Whatsapp'} to={'https://whatsapp.com/channel/0029Va5Dzkw9sBIHtVNaHY44'}>
+         {/* <IconButton color={'green.400'}  borderRadius={'50%'} as={Link} target='_blank' fontSize={'30px'} label={'Whatsapp'} to={'https://whatsapp.com/channel/0029Va5Dzkw9sBIHtVNaHY44'}>
                 <FaWhatsapp />
               </IconButton>
               
@@ -140,7 +141,7 @@ const ContactForm = () => {
               </IconButton>
               <IconButton color={'pink.400'}  borderRadius={'50%'} as={Link} target='_blank' fontSize={'30px'} label={'Instagram'}  to={'https://www.instagram.com/rajengineering__/'}>
                 <FaInstagram />
-              </IconButton>
+              </IconButton> */}
 
              <Box>
                

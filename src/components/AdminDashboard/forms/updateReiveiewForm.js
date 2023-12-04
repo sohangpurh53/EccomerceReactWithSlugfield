@@ -69,9 +69,9 @@ const UpdateReview = () => {
     <>
     <Box mx={'auto'} w={{base:'300px', md:'md'}}>
        
-        <Box maxW={{base:'50px', md:'md'}}>
+        <Box mt={2.5} w={{base:'100px', md:'200px'}}>
             <Image  objectFit={'contain'}  src={`http://api.eccomerce.digitaltek.co.in${reviewFormData.product.first_image}`}/> 
-            <Text whiteSpace={'nowrap'} fontFamily={'heading'}  fontSize={{base:'sm', md:'md', lg:'lg'}}>
+            <Text whiteSpace={'nowrap'}  fontSize={{base:'sm', md:'md', lg:'lg'}}>
             {reviewFormData.product.name}
         </Text>
         </Box>

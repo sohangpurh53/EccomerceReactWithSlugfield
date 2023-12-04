@@ -205,7 +205,7 @@ const Header = () => {
             <Box display={'flex'} flexDir={'column'} alignItems={'center'} key={result.id} m="2" p="2" borderWidth="1px" borderRadius="md">
               <Text color={'black'} fontWeight="bold" fontSize="md">{result.name}</Text>
               <Box h={'50px'} w={'50px'}>
-                <Image boxSize={'100%'} objectFit={'contain'} src={`http://127.0.0.1:8000${result.first_image}`} alt={result.name} />
+                <Image boxSize={'100%'} objectFit={'contain'} src={`https://api.eccomerce.digitaltek.co.in${result.first_image}`} alt={result.name} />
               </Box>
               <Button size="sm" onClick={() => setSearchResults(null)} as={RouterLink} to={`/product/${result.slug}/`}>View Product</Button>
             </Box>

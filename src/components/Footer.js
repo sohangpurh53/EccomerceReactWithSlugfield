@@ -8,12 +8,12 @@ import {
   Stack,
   Text,
   VisuallyHidden,
-  Input,
-  IconButton,
+  // Input,
+  // IconButton,
   useColorModeValue,
 } from '@chakra-ui/react';
 import { FaFacebook,  FaInstagram,  FaWhatsapp,  } from 'react-icons/fa';
-import { BiMailSend } from 'react-icons/bi';
+// import { BiMailSend } from 'react-icons/bi';
 import { Link } from 'react-router-dom';
 
 
@@ -93,7 +93,7 @@ function Footer() {
             
             </Box>
             <Box >
-            <Link to={'#'}>Contact us</Link>   
+            <Link to={'/contact-us/'}>Contact us</Link>   
             </Box>
             <Box >
             <Link to={'#'}>Pricing</Link> 
